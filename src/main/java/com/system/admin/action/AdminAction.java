@@ -1,15 +1,11 @@
 package com.system.admin.action;
 
 import com.system.admin.service.AdminService;
-import com.system.exception.defaults.CustomException;
 import com.system.exception.file.FileException;
 import com.system.file.entity.History;
 import com.system.file.entity.OrderInfo;
 import com.system.file.service.FileService;
-import com.system.info.dao.StudentCustom;
-import com.system.info.entity.College;
-import com.system.info.service.CollegeService;
-import com.system.info.service.StudentService;
+//import com.system.info.dao.StudentCustom;
 import com.system.login.dao.UserDao;
 import com.system.login.entity.User;
 import com.system.login.service.UserService;
@@ -51,9 +47,14 @@ public class AdminAction {
     /**
      * 科目批次状态名
      */
-    @Resource(name = "studentServiceImpl")
-    private StudentService studentService;
-    private static final String O_STATE = "ostate";
+
+
+    /**
+     *  @Resource(name = "studentServiceImpl")
+     *     private StudentService studentService;*/
+         private static final String O_STATE = "ostate";
+
+
 
     @Resource
     private FileService fileService;
@@ -61,8 +62,8 @@ public class AdminAction {
     @Resource
     private AdminService adminService;
 
-    @Resource
-    private CollegeService collegeService;
+  //  @Resource
+ //   private CollegeService collegeService;
     @Resource
     private UserService userService;
 
@@ -186,7 +187,7 @@ public class AdminAction {
         }
         zipOut.close();
     }
-    @RequestMapping(value = "/addStudent", method = {RequestMethod.GET})
+  /*  @RequestMapping(value = "/addStudent", method = {RequestMethod.GET})
     public String addStudentUI(Model model) throws Exception {
 
  //       List<History> list = FileService.getOrderInfoEntityOfAll();
@@ -194,8 +195,42 @@ public class AdminAction {
    //     model.addAttribute("collegeList", list);
 
         return "jsp/addStudent.jsp";
+    }*/
+    @RequestMapping("addStudent")
+    @RequiresPermissions("admin")
+    public @ResponseBody
+    Boolean addStudent(User user, String aa) throws Exception {
+        if (user == null) {
+            throw new FileException("添加失败：参数为空");
+        }
+        if (user.getUsername() == null || "".equals(user.getUsername())) {
+            return false;
+        }
+        if (user.getName() == null) {
+            return false;
+        }
+        boolean firstlogin = true;
+        String password = user.getUsername();
+        String headimg = aa;
+        String name = user.getName();
+        String percode = user.getPercode();
+        String username = user.getUsername();
+      //  String userid = user.getUserid();
+     //   String uid = user.getName();
+
+        user.setUid(UUID.randomUUID().toString().replace("-", ""));
+        user.setFirstlogin(firstlogin);
+        user.setPassword(password);
+        user.setHeadimg(headimg);
+        user.setName(name);
+        user.setPercode(percode);
+        user.setUsername(username);
+   //     user.setUserid(userid);
+     // user.setOtime(new Date());
+        userService.addStudent(user);
+        return true;
     }
-    @RequestMapping(value = "/editStudent", method = {RequestMethod.GET})
+  /*  @RequestMapping(value = "/editStudent", method = {RequestMethod.GET})
     public String editStudentUI(Integer id, Model model) throws Exception {
         if (id == null) {
             //加入没有带学生id就进来的话就返回学生显示页面
@@ -212,7 +247,7 @@ public class AdminAction {
 
 
         return "jsp/editStudent.jsp";
-    }
+    }*/
     /**
      * 更改科目批次启用状态
      * 该方法需要管理员权限
@@ -260,6 +295,16 @@ public class AdminAction {
         return true;
     }
 
+    @RequestMapping("delStudentByUID")
+    @RequiresPermissions("admin")
+    public @ResponseBody
+    Boolean delStudentByUID(Integer uid) throws Exception {
+        if (uid == null) {
+            throw new FileException("删除失败：参数不正确");
+        }
+        userService.delStudentByUID(uid);
+        return true;
+    }
     /**
      * 添加科目批次信息
      * 该方法需要管理员权限
@@ -281,13 +326,15 @@ public class AdminAction {
         if (orderInfo.getOname() == null) {
             return false;
         }
-        if (orderInfo.getOstate() == null) {
-            return false;
-        }
+        boolean Ostate = true;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String Ouid= user.getName();
+        orderInfo.setOuid(Ouid);
         int oid = (orderInfo.getOname().hashCode()) + (orderInfo.getOsubject().hashCode());
         orderInfo.setOid(oid);
+        orderInfo.setOstate(Ostate);
         orderInfo.setOtime(new Date());
-        adminService.addOrderInfo(orderInfo);
+        adminService.addOrderInfo(orderInfo,user);
         return true;
 
     }

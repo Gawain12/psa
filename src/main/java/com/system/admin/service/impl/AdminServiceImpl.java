@@ -6,8 +6,6 @@ import com.system.file.dao.OrderInfoDao;
 import com.system.file.entity.History;
 import com.system.file.entity.OrderInfo;
 import com.system.file.service.FileService;
-import com.system.info.dao.StudentCustom;
-import com.system.info.dao.StudentExample;
 import com.system.login.dao.UserDao;
 import com.system.login.entity.User;
 import com.system.login.service.UserService;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +33,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Resource
     private OrderInfoDao orderInfoDao;
+
+    @Resource
+    private UserDao userDao;
 
     @Resource
     private UserService userService;
@@ -65,13 +67,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addOrderInfo(OrderInfo orderInfo) {
+    public void addOrderInfo(OrderInfo orderInfo, User user){
+        String Ouid= user.getName();
+        orderInfo.setOuid(Ouid);
         orderInfoDao.addOrderInfo(orderInfo);
     }
 
     @Override
     public void delOrderinfoByOID(Integer oid) {
         orderInfoDao.delOrderinfoByOID(oid);
+    }
+
+    @Override
+    public void delStudentByUID(Integer uid) {
+        userDao.delStudentByUID(uid);
     }
 
     @Override

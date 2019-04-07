@@ -2,6 +2,7 @@ package com.system.admin.service;
 
 import com.system.file.entity.History;
 import com.system.file.entity.OrderInfo;
+import com.system.login.entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,9 @@ public interface AdminService {
      * 添加科目批次
      *
      * @param orderInfo 科目批次实体
+     * @param user
      */
-    void addOrderInfo(OrderInfo orderInfo);
+    void addOrderInfo(OrderInfo orderInfo, User user) throws Exception;
 
     /**
      * 删除科目批次
@@ -69,4 +71,8 @@ public interface AdminService {
      * 获得任务总数
      */
      int getCountOrder() throws Exception;
+     /**
+      * 删除学生
+      */
+     void delStudentByUID(Integer oid);
 }

@@ -86,6 +86,11 @@
     </select>
     <insert id="addStudent" parameterType="User">
         INSERT INTO user(uid, username, password, headimg, firstlogin, name, percode, userOpenID)
-        VALUES (uid, username, password, headimg, firstlogin, name, percode, userOpenID)
+        VALUES  (#{uid}, #{username}, #{password}, #{headimg}, #{firstlogin},#{name},#{percode},#{userOpenID})
     </insert>
+    <delete id="delStudentByUID" parameterType="int">
+        DELETE
+        FROM user
+        WHERE uid = #{uid}
+    </delete>
 </mapper>

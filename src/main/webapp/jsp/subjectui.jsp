@@ -74,7 +74,8 @@
             <div class="row">
  <section>
     <div class="container">
-        <h1>任务管理</h1><span><a href="${basePath }admin" class="btn btn-danger">返回文件页面</a></span>
+        <h1>任务管理</h1>
+        <span><a href="${basePath }admin" class="btn btn-danger">返回文件页面</a></span>
         <button type="button" id="upfilebutton_id" class="btn btn-primary"
                 data-toggle="modal" data-remote="${basePath }jsp/addsubjectui.jsp" data-target=".bs-modal-lg">添加任务或批次
         </button>
@@ -83,6 +84,8 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content"></div>
             </div>
+        </div>
+    </div>
  </section>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -90,7 +93,7 @@
             <td>任务名称</td>
             <td>批次名称</td>
             <td>当前状态</td>
-            <td>管理教师</td>
+            <td>发布教师</td>
             <td>上次操作时间</td>
             <td>操作</td>
         </tr>
@@ -100,11 +103,9 @@
                 <td><p>${allorderinfo.osubject }</p></td>
                 <td><p>${allorderinfo.oname }</p></td>
                 <td><p>${allorderinfo.ostate?"已启用":"已禁用" }</p></td>
-                <td><p></p></td>
+                <td><p>${allorderinfo.ouid }</p></td>
                 <td><p><fmt:formatDate value="${allorderinfo.otime }" pattern="yyyy年MM月dd日 HH:mm:ss"/></p></td>
                 <td>
-                    <button type="button" class="btn btn-info btn-primary"
-                            onclick="changeState(${allorderinfo.oid },${allorderinfo.ostate})">${allorderinfo.ostate?"禁用":"启用" }</button>
                     <button type="button" class="btn btn-info btn-warning" onclick="edit(${allorderinfo.oid })">编辑
                     </button>
                     <button type="button" class="btn btn-info btn-danger" onclick="del(${allorderinfo.oid })">删除
@@ -146,29 +147,7 @@
 <script src="${basePath }weblib/bootstrap/js/bootstrap.min.js"></script>
 <script src="${basePath }js/base.js"></script>
 <script>
-    function add() {
-        var osubject = $("#osubject").val();
-        var oname = $("#oname").val();
-        var ostate = $("#ostate").val();
-        $.get("${basePath }addOrderInfo?osubject=" + osubject + "&oname=" + oname + "&ostate=" + ostate, function (data) {
-            if (data) {
-                $('#addmodel').modal('hide');
-                window.location.reload();
-            } else {
-                $("#adderrormessage").removeClass("hidden");
-            }
-        });
-    }
 
-    function changeState(oid, ostate) {
-        var value = true;
-        if (ostate) {
-            value = false;
-        }
-        $.get("${basePath }changeKeyByOID?oid=" + oid + "&key=ostate&value=" + value, function () {
-            $("#loadsubject").load("${basePath}subjectui");
-        });
-    }
 
     function del(oid) {
         $.get("${basePath }delOrderinfoByOID?oid=" + oid, function (data) {
@@ -178,38 +157,10 @@
         });
     }
 
-  /*  $(function () {
-        $("#loadsubject").load("${basePath}subjectui");
-        var file_subject = "";
-        var file_oid = "";
-        $("#subject_ID").change(function () {
-            file_subject = $(this).val();
-            $.get("${basePath }getOnameBysubjectOfAll?subject=" + file_subject, function (data) {
-                $("#oid_id").empty();
-                $("#upfilebutton_id").removeAttr("disabled");
-                $.each(data, function (key, value) {
-                    if (key === 0) {
-                        file_oid = value.oid;
-                        flushFileList();
-                    }
-                    $("#oid_id").append("<option value=" + value.oid + ">" + value.oname + "</option>");
-                });
-            });
-        });
-        $("#oid_id").change(function () {
-            file_oid = $(this).val();
-            console.log("file_oid" + file_oid);
-            flushFileList();
-        });
-
-        function flushFileList() {
-            $("#fileList").load("${basePath }getFileList?hoid=" + file_oid);
-        }
-    }); */
-
     function edit(oid) {
         console.log("edit" + oid);
     }
 </script>
+</div>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.system.login.dao;
 
 import com.system.file.entity.OrderInfo;
-import com.system.info.dao.StudentCustom;
 import com.system.login.entity.User;
 import com.system.util.PagingVO;
 
@@ -87,13 +86,16 @@ public interface UserDao {
     /**
      * 根据用户ID插入用户OPEN ID
      *
-     * @param user {@link User}
+     * @param  {@link User}
      */
 
     User getUserEntityByHid(String hid);
 
     List<User> findByPaging(PagingVO pagingVO) throws Exception;
 
+    void addStudent(User user);
 
     int getCount() throws Exception;
+
+    void delStudentByUID(Integer uid);
      }

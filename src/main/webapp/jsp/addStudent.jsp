@@ -7,72 +7,58 @@
 	application.setAttribute("basePath", basePath);
 %>
 <form class="form-horizontal">
-	<div class="row">
-		<h1 style="text-align: center;">添加学生信息</h1>
+	<h1>添加学生：</h1>
+	<div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="adderrormessage">
+		<button type="button" class="close" aria-label="Close" id="closemessage_id"><span
+				aria-hidden="true">&times;</span>
+		</button>
+		<strong>添加失败!</strong> 请检查网络连接！
+	</div>
+	<div class="form-group">
+		<label for="username" class="col-sm-2 control-label">学号：</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="username" placeholder="请输入学号...">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">姓名：</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="name" placeholder="请输入姓名...">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="percode" class="col-sm-2 control-label">身份：</label>
+		<div class="col-sm-10">
+			<label>
+				<select class="form-control" id="percode">
+					<option value=user>学生</option>
+					<option value=admin>老师</option>
+				</select>
+			</label>
+		</div>
 	</div>
 	</div>
-	<div class="panel-body">
-		<form class="form-horizontal" role="form" action="/admin/addStudent" id="editfrom" method="post">
-			<div class="form-group">
-				<label for="inputEmail3" class="col-sm-2 control-label">学号</label>
-				<div class="col-sm-10">
-					<input type="number" class="form-control" id="inputEmail3" name="userid" placeholder="请输入学号"
-					<c:if test='${student!=null}'>
-						   value="${student.userid}"
-					</c:if>>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">姓名</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="inputPassword3" name="username" placeholder="请输入姓名"
-					<c:if test='${student!=null}'>
-						   value="${student.username}"
-					</c:if>>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">性别</label>
-				<div class="col-sm-10">
-					<label class="checkbox-inline">
-						<input type="radio" name="sex" value="男" checked>男
-					</label>
-					<label class="checkbox-inline">
-						<input type="radio" name="sex" value="女">女
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label">出生年份</label>
-				<div class="col-sm-10">
-					<input type="date" value="1996-09-02" name="birthyear"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label" name="grade">入学时间</label>
-				<div class="col-sm-10">
-					<input type="date" value="2015-09-02" name="grade"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPassword3" class="col-sm-2 control-label" name="grade">所属院系</label>
-				<div class="col-sm-10">
-					<select class="form-control" name="collegeid">
-						<c:forEach items="${collegeList}" var="item">
-							<option value="${item.collegeid}">${item.collegename}</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
-			<div class="form-group" style="text-align: center">
-				<button class="btn btn-default" type="submit">提交</button>
-				<button class="btn btn-default" type="reset">重置</button>
-			</div>
-		</form>
 	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" class="btn btn-default" onclick="add()">添加</button>
+		</div>
 	</div>
 </form>
 <script>
+	function add() {
+		var username = $("#username").val();
+		var name = $("#name").val();
+		var percode = $("#percode").val();
+		$.get("${basePath }addStudent?username=" + username + "&name=" + name + "&percode=" + percode, function (data) {
+			if (data) {
+				$('#addmodel').modal('hide');
+				window.location.reload();
+			} else {
+				$("#adderrormessage").removeClass("hidden");
+			}
+		});
+	}
 	$("#closemessage_id").click(function () {
 		$("#adderrormessage").addClass("hidden");
 	});

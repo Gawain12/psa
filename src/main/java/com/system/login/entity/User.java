@@ -13,6 +13,8 @@ public class User implements Serializable {
      * 用户唯一ID
      */
     private String uid;
+
+    private String userid;
     /**
      * 用户名
      */
@@ -114,5 +116,13 @@ public class User implements Serializable {
 
     public void setFirstlogin(Boolean firstlogin) {
         this.firstlogin = firstlogin;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

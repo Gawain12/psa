@@ -6,7 +6,7 @@ import org.junit.Test;
 import javax.mail.MessagingException;
 
 
-public class ShwTest {
+public class PsaTest {
 
 
     @Test

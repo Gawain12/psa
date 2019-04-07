@@ -26,15 +26,6 @@
             <input type="text" class="form-control" id="oname" placeholder="请输入内容...">
         </div>
     </div>
-    <div class="form-group">
-        <label for="oname" class="col-sm-2 control-label">状态：</label>
-        <div class="col-sm-10">
-            <label>
-                <select class="form-control" id="ostate">
-                    <option value=true>启用</option>
-                    <option value=false>禁用</option>
-                </select>
-            </label>
         </div>
     </div>
     <div class="form-group">
@@ -44,6 +35,18 @@
     </div>
 </form>
 <script>
+    function add() {
+        var osubject = $("#osubject").val();
+        var oname = $("#oname").val();
+        $.get("${basePath }addOrderInfo?osubject=" + osubject + "&oname=" + oname , function (data) {
+            if (data) {
+                $('#addmodel').modal('hide');
+                window.location.reload();
+            } else {
+                $("#adderrormessage").removeClass("hidden");
+            }
+        });
+    }
     $("#closemessage_id").click(function () {
         $("#adderrormessage").addClass("hidden");
     });

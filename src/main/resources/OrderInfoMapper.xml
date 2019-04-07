@@ -27,7 +27,7 @@
     </select>
 
     <select id="getOrderInfoEntity" parameterType="com.system.util.PagingVO" resultType="OrderInfo">
-        SELECT oid, oname, osubject, ostate, otime
+        SELECT oid, oname, osubject, ostate, otime,ouid
         FROM orderinfo
         <if test="toPageNo!=null and pageSize!=null">
             limit #{toPageNo},#{pageSize}
@@ -35,14 +35,14 @@
     </select>
 
     <select id="getOrderInfoEntityByOID" resultType="OrderInfo" parameterType="int">
-        SELECT oid, oname, osubject, ostate, otime
+        SELECT oid, oname, osubject, ostate, otime,ouid
         FROM orderinfo
         WHERE oid = #{oid}
     </select>
 
     <insert id="addOrderInfo" parameterType="OrderInfo">
-        INSERT INTO orderinfo(oid, oname, osubject, ostate, otime)
-        VALUES (#{oid}, #{oname}, #{osubject}, #{ostate}, #{otime})
+        INSERT INTO orderinfo(oid, oname, osubject, ostate, otime,ouid)
+        VALUES (#{oid}, #{oname}, #{osubject}, #{ostate}, #{otime},#{ouid})
     </insert>
     <update id="changeKeyByOID" parameterType="map">
         UPDATE orderinfo

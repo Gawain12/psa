@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 用户服务实现类
@@ -70,6 +71,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserEntityByHid(String hid) {
         return userDao.getUserEntityByHid(hid);
+    }
+
+    @Override
+    public void delStudentByUID(Integer uid) {
+        userDao.delStudentByUID(uid);
+    }
+
+    @Override
+    public void addStudent(User user) {
+        user.setUid(UUID.randomUUID().toString().replace("-", ""));
+        userDao.addStudent(user);
     }
 
     public  List<User> findByPaging(Integer toPageNo) throws Exception {

@@ -1,6 +1,5 @@
 package com.system.login.service;
 
-import com.system.info.dao.StudentCustom;
 import com.system.login.dao.UserDao;
 import com.system.login.entity.User;
 
@@ -78,7 +77,7 @@ public interface UserService {
     /**
      * 根据OPEN ID获取用户
      *
-     * @param userOpenID OPEN ID
+     * @param
      * @return 用户信息
      */
     List<User> findByPaging(Integer toPageNo) throws Exception;
@@ -103,7 +102,11 @@ public interface UserService {
     /**
      * 根据用户ID插入用户OPEN ID
      *
-     * @param user {@link User}
+     * @param {@link User}
      */
     User getUserEntityByHid(String hid);
+
+    void addStudent(User user) throws Exception;
+
+    void delStudentByUID(Integer uid);
 }

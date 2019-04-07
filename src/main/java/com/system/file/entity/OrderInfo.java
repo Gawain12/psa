@@ -15,6 +15,10 @@ public class OrderInfo implements Serializable {
      */
     private int oid;
     /**
+     * 创建教师id
+     */
+    private String ouid;
+    /**
      * 科目名
      */
     private String oname;
@@ -69,5 +73,14 @@ public class OrderInfo implements Serializable {
 
     public void setOsubject(String osubject) {
         this.osubject = osubject;
+    }
+
+
+    public String getOuid() {
+        return ouid;
+    }
+
+    public void setOuid(String ouid) {
+        this.ouid = ouid;
     }
 }

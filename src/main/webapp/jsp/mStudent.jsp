@@ -71,14 +71,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
+                <section>
+                    <div class="container">
                 <h1 class="col-md-5">学生名单管理</h1>
-                <form class="bs-example bs-example-form col-md-5" role="form" style="margin: 20px 0 10px 0;" action="${basePath }jsp/selectStudent" id="form1" method="post">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="请输入姓名" name="findByName">
-                        <span class="input-group-addon btn" id="sub">搜索</span>
-                    </div>
-                </form>
-
                     <button type="button" id="upfilebutton_id" class="btn btn-primary"
                             data-toggle="modal" data-remote="${basePath }jsp/addStudent.jsp" data-target=".bs-modal-lg">添加用户信息
                     </button>
@@ -89,14 +84,22 @@
                         <div class="modal-content"></div>
                     </div>
             </div>
-        </div>
-        <table class="table table-bordered">
+                </div>
+                </section>
+            <div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="delalert_id">
+                <h4 class="glyphicon glyphicon-warning-sign"> 确定删除吗？</h4>
+                <p>注意：该操作不可逆！</p>
+                <p>
+                    <button type="button" class="btn btn-danger" id="delalert_true">确定删除</button>
+                    <button type="button" class="btn btn-default" id="delalert_cancel">取消</button>
+                </p>
+            </div>
+
+            <table class="table table-bordered">
             <thead>
             <tr>
                 <th>学号</th>
                 <th>姓名</th>
-                <th>性别</th>
-                <th>学院</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -106,8 +109,10 @@
                     <td>${item.username}</td>
                     <td>${item.name}</td>
                     <td>
-                        <button class="btn btn-default btn-xs btn-info" onClick="location.href='${basePath }editStudent?id=${item.uid}'">修改</button>
-                        <button class="btn btn-default btn-xs btn-danger btn-primary" onClick="location.href='${basePath }removeStudent?id=${item.uid}'">删除</button>
+                        <button class="btn btn-default btn-xs btn-info" onClick="location.href='${basePath }editStudent?uid=${item.uid}'">修改</button>
+                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除</button>
+                            <button class="btn btn-info btn-danger"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
+                        </button>
                         <!--弹出框-->
                     </td>
                 </tr>
@@ -138,7 +143,7 @@
             </c:if>
         </div>
     </div>
-
+        </div>
 </div>
 </div>
 </div>
@@ -156,10 +161,10 @@
 <script src="${basePath }js/base.js"></script>
 <script>
     function add() {
-        var osubject = $("#osubject").val();
-        var oname = $("#oname").val();
-        var ostate = $("#ostate").val();
-        $.get("${basePath }addOrderInfo?osubject=" + osubject + "&oname=" + oname + "&ostate=" + ostate, function (data) {
+        var username = $("#username").val();
+        var name = $("#name").val();
+        var percode = $("#percode").val();
+        $.get("${basePath }addStudent?username=" + username + "&name=" + name + "&percode=" + percode, function (data) {
             if (data) {
                 $('#addmodel').modal('hide');
                 window.location.reload();
@@ -168,6 +173,42 @@
             }
         });
     }
+  /*  function del(uid) {
+        $.get("${basePath }delStudentByUID?uid=" + uid, function (data)
+         {
+            if (data) {
+                window.location.reload();
+            }
+        });
+    }*/
+    function del(uids) {
+        $("#delalert_id").removeClass("hidden");
+        uid=uids;
+    }
+    $("#delalert_true").click(function () {
+        $("#delalert_id").addClass("hidden");
+        $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
+            if (data) {
+                $("#alert_success").removeClass("alert-danger");
+                $("#alert_success").addClass("alert-success");
+                $("#alert_success").removeClass("hidden");
+                $("#" + hid).remove();
+                window.location.reload();
+                $("#del_message").text("文件已经成功删除！");
+            } else {
+                $("#alert_success").removeClass("alert-success");
+                $("#alert_success").addClass("alert-danger");
+                $("#alert_success").removeClass("hidden");
+                $("#del_message").text("文件删除失败！请检查网络连接！");
+            }
+        });
+    });
+    $("#delalert_cancel").click(function () {
+        $("#delalert_id").addClass("hidden");
+    });
+    $("#closealert_successdel").click(function () {
+        $("#alert_success").addClass("hidden");
+    });
 </script>
 </body>
 </html>
