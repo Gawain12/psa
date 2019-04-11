@@ -69,7 +69,6 @@
             </list>
         </property>
     </bean>
-
     <!-- 配置事务通知 -->
     <tx:advice id="advice" transaction-manager="dataSourceTransactionManager">
         <tx:attributes>

@@ -1,5 +1,7 @@
 package com.system.admin.action;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.system.admin.service.AdminService;
 import com.system.exception.file.FileException;
 import com.system.file.entity.History;
@@ -18,12 +20,11 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -101,6 +102,37 @@ public class AdminAction {
         return fileService.getOnameBysubjectOfAll(subject);
     }
 
+    /**
+     * app信息的获取，用echarts显示
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getAllecharts")
+    public void getAllecharts(HttpServletRequest request, HttpServletResponse response,String uid)throws Exception{
+
+    /*    List m = (List) new  ArrayList();
+        JSONArray jsons = new JSONArray();
+        for(int i=0;i<10;i++){
+            History user = new History();
+            user.setHid("name_" + i);
+            user.setHoid(i);
+            m.add(user);
+        }
+        for(int j=0;j<m.size();j++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", m.get(j));
+            jsons.add(jsonObject);
+        }*/
+    JSONArray jsons = new JSONArray();
+        List<History> list = fileService.getUserHistoryByUserId(uid);
+    for(int j=0;j<list.size();j++){
+        JSONObject jsonObject =new JSONObject();
+        jsonObject.put("user",list.get(j));
+        jsons.add(jsonObject);
+    }
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().print(jsons);
+    }
     /**
      * 后台入口方法
      * 管理员权限访问
@@ -247,7 +279,7 @@ public class AdminAction {
 
 
         return "jsp/editStudent.jsp";
-    }*/
+    }
     /**
      * 更改科目批次启用状态
      * 该方法需要管理员权限
@@ -257,7 +289,7 @@ public class AdminAction {
      * @param value value
      * @return 更改是否成功
      * @throws Exception Exception
-     */
+
     @RequestMapping("changeKeyByOID")
     @RequiresPermissions("admin")
     public @ResponseBody
@@ -274,7 +306,7 @@ public class AdminAction {
         }
         adminService.changeKeyByOID(map);
         return true;
-    }
+    }*/
 
     /**
      * 根据批次ID删除批次
@@ -344,6 +376,7 @@ public class AdminAction {
         dateFormat.setLenient(true);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
  /*   @RequestMapping("/sStudent")
     @RequiresPermissions("admin")
     public String showStudent(Model model, Integer page) throws Exception {

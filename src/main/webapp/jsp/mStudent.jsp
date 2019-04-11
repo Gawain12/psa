@@ -30,7 +30,18 @@
         .userinfo img {
             margin-right: 10px;
         }
-
+        .background {
+            background: url("${basePath }/img/interstellar.jpg") fixed center;
+            background-size: cover;
+        }
+        #bs-collapse {
+            line-height: 48px;
+        }
+        table,td,th
+        {
+            border-collapse:collapse;
+            border:2px solid gray;
+        }
         #bs-collapse {
             line-height: 48px;
         }
@@ -41,7 +52,7 @@
         }
     </style>
 </head>
-<body>
+<body class="background">
 <!--头部--><header>
     <nav class="navbar navbar-default">
         <div class="container">
@@ -109,9 +120,9 @@
                     <td>${item.username}</td>
                     <td>${item.name}</td>
                     <td>
-                        <button class="btn btn-default btn-xs btn-info" onClick="location.href='${basePath }editStudent?uid=${item.uid}'">修改</button>
-                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除</button>
-                            <button class="btn btn-info btn-danger"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
+                        <button class="btn btn-default  btn-info" onClick="location.href='${basePath }editStudent?uid=${item.uid}'">修改</button>
+                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除
+                            <button class="btn btn-info btn-warning"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
                         </button>
                         <!--弹出框-->
                     </td>
@@ -173,21 +184,21 @@
             }
         });
     }
-  /*  function del(uid) {
-        $.get("${basePath }delStudentByUID?uid=" + uid, function (data)
+    /* function del(uid) {
+         $.get("${basePath }delStudentByUID?uid=" + uid, function (data)
          {
             if (data) {
                 window.location.reload();
             }
         });
     }*/
-    function del(uids) {
-        $("#delalert_id").removeClass("hidden");
-        uid=uids;
-    }
-    $("#delalert_true").click(function () {
-        $("#delalert_id").addClass("hidden");
-        $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
+       function del(uids) {
+           $("#delalert_id").removeClass("hidden");
+           uid=uids;
+       }
+       $("#delalert_true").click(function () {
+           $("#delalert_id").addClass("hidden");
+           $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
             if (data) {
                 $("#alert_success").removeClass("alert-danger");
                 $("#alert_success").addClass("alert-success");

@@ -6,7 +6,7 @@ body {
 
 @media (max-width: 992px) {
     .background {
-        background: url("../img/backgroundimg.jpeg") fixed center;
+        background: url("../img/interstellar.jpg") fixed center;
         background-size: cover;
     }
 }

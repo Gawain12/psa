@@ -197,7 +197,19 @@ public class FileAction {
         }
         return "index.jsp";
     }
+    @RequestMapping(value = "/studentAnalyse", method = RequestMethod.GET)
+    public String studentAnalyse(Model model,String uid) {
 
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<History> userHistoryList = fileService.getUserHistoryByUserId(uid);
+        model.addAttribute("user", user);
+        //下拉框数据
+        model.addAttribute("orderInfoList", fileService.getOrderInfoEntity());
+        model.addAttribute("userHistoryList", userHistoryList);
+        // ModelAndView modelAndView = new ModelAndView("jsp/studentAnalyse.jsp");
+        // modelAndView.addObject("title", "Line Chart");
+        return "jsp/studentAnalyse.jsp";
+    }
     /**
      * 设置用户选择上传的科目ID
      *

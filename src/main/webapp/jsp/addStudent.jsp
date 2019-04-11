@@ -17,7 +17,7 @@
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">学号：</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" id="username" placeholder="请输入学号...">
+			<input type="number" class="form-control" id="username" placeholder="请输入学号...">
 		</div>
 	</div>
 	<div class="form-group">

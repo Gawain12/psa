@@ -58,7 +58,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="userinfo">
-                        <img src="${basePath }img/headdefault.jpg" alt="headImg" class="img-circle" style="width: 30px">
+                        <img src="${basePath }/img/headdefault.jpg" alt="headImg" class="img-circle" style="width: 30px">
                         <span>登录用户：${user.name }</span>
                     </div>
                 </div>

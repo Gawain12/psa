@@ -30,18 +30,65 @@
         .userinfo img {
             margin-right: 10px;
         }
-
+        .background {
+            background: url("${basePath }/img/interstellar.jpg") fixed center;
+            background-size: cover;
+        }
+        h1 {font-color:white;}
+        .blur {
+            background: rgba(233, 233, 233, .9);
+            border-radius: 15px;
+        }
         #bs-collapse {
             line-height: 48px;
         }
-
+        table, th,td
+        {
+            border-collapse:collapse;
+            border:2px solid gray;
+        }
         tr > td > p {
             margin-top: 8px;
             margin-bottom: 8px;
         }
+        .button1 {
+            display:inline-block;
+            border-radius:4px;
+            background-color:#f4511e;
+            trasnsition:all 0.5s;
+            cursor:pointer;
+            color:#FFFFFF;
+            font-size:30px;
+            padding:20px;
+            width:180px;
+            height:60px;
+            margin:2px;
+        }
+        .button1 span{
+            cursor:pointer;
+            display:inline-block;
+            position: relative;
+            trasnsition: 0.5s;
+        }
+        .button1 span:after{
+            content:'>>';
+            posintion:absolute;
+            opacity:0;
+            right:-10px;
+            top:0;
+            transition:0.5s;
+        }
+        .button1:hover span {
+            padding-right: 20px;
+        }
+        .button1:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
     </style>
 </head>
-<body>
+<body class="background">
 <!--头部-->
 <header>
     <nav class="navbar navbar-default">
@@ -73,7 +120,7 @@
 <section>
     <div class="container">
         <h1>任务管理</h1>
-        <span><a href="${basePath }subjectui" class="btn btn-danger">进入</a></span>
+        <button type="button" class="button1"  onclick="entry()" ><span>进入</span></button>
     </div>
     <div class="modal fade bs-modal-lg" id="addmodel" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel">
@@ -84,7 +131,7 @@
 
 <!--内容-->
 <section>
-    <div class="container">
+    <div class="container blur">
         <div>
             <h1>下载已上传的任务</h1>
             <label for="subject_ID">
@@ -115,8 +162,6 @@
 <script src="${basePath }weblib/bootstrap/js/bootstrap.min.js"></script>
 <script src="${basePath }js/base.js"></script>
 <script>
-
-
     $(function () {
         $("#loadsubject").load("${basePath}subjectui");
         var file_subject = "";
@@ -145,6 +190,9 @@
             $("#fileList").load("${basePath }getFileList?hoid=" + file_oid);
         }
     });
+    function entry() {
+        window.open("${basePath }subjectui", "_blank");
+    }
 </script>
 </body>
 </html>

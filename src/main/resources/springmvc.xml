@@ -59,4 +59,7 @@
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/img/**" location="/img/"/>
     <mvc:resources mapping="/weblib/**" location="/weblib/"/>
+    <!--  对静态资源文件的访问， Web应用服务器默认的Servlet名称是"default" -->
+    <!-- 容器默认的DefaultServletHandler处理所有静态内容与无RequestMapping处理的URL -->
+    <mvc:default-servlet-handler/>
 </beans>

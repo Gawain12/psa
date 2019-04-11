@@ -20,7 +20,7 @@
             <td>操作</td>
         </tr>
         <c:forEach items="${fileListByHoid }" var="filelist">
-            <tr <c:if test="${filelist.uptime==null}">class='danger'</c:if>>
+            <tr <c:if test="${filelist.uptime==null}">class='danger'</c:if><c:if test="${filelist.score<60}">bgcolor='red'</c:if>>
                 <td><p>${filelist.osubject }</p></td>
                 <td><p>${filelist.oname }</p></td>
                 <td><p>${filelist.uptime==null?"未上传":"已上传" }</p></td>
@@ -36,7 +36,6 @@
                         </c:if>
                     </p>
                 </td>
-
                 <td>
                     <button type="button" class="btn btn-info" onclick="down('${filelist.hid }')"
                             <c:if test="${filelist.uptime==null}">disabled='disabled'</c:if>>下载
@@ -54,11 +53,9 @@
     function down(hid) {
         window.open("${basePath }downFile?hid=" + hid, "_blank");
     }
-
     function downall() {
         window.open("${basePath }downAllFile", "_blank");
     }
-
     $(function () {
         var data = [];
         <c:forEach items="${fileListByHoid }" var="file">

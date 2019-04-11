@@ -30,18 +30,30 @@
         .userinfo img {
             margin-right: 10px;
         }
-
+        .background {
+            background: url("${basePath }/img/interstellar.jpg") fixed center;
+            background-size: cover;
+        }
+        h1 {font-color:white;}
+        .blur {
+            background: rgba(233, 233, 233, .9);
+            border-radius: 15px;
+        }
         #bs-collapse {
             line-height: 48px;
         }
-
+        table, td,th
+        {
+            border-collapse:collapse;
+            border:2px solid gray;
+        }
         tr > td > p {
             margin-top: 8px;
             margin-bottom: 8px;
         }
     </style>
 </head>
-<body>
+<body class="background">
 <!--头部-->
 <header>
     <nav class="navbar navbar-default">
@@ -77,7 +89,7 @@
         <h1>任务管理</h1>
         <span><a href="${basePath }admin" class="btn btn-danger">返回文件页面</a></span>
         <button type="button" id="upfilebutton_id" class="btn btn-primary"
-                data-toggle="modal" data-remote="${basePath }jsp/addsubjectui.jsp" data-target=".bs-modal-lg">添加任务或批次
+                data-toggle="modal" data-remote="${basePath }jsp/addsubjectui.jsp" data-target=".bs-modal-lg">添加任务或内容
         </button>
         <div class="modal fade bs-modal-lg" id="addmodel" tabindex="-1" role="dialog"
              aria-labelledby="myLargeModalLabel">
@@ -91,8 +103,7 @@
     <table class="table table-hover">
         <tr>
             <td>任务名称</td>
-            <td>批次名称</td>
-            <td>当前状态</td>
+            <td>具体内容</td>
             <td>发布教师</td>
             <td>上次操作时间</td>
             <td>操作</td>
@@ -102,7 +113,6 @@
             <tr <c:if test="${!allorderinfo.ostate}">class='danger'</c:if> id="${allorderinfo.oid }">
                 <td><p>${allorderinfo.osubject }</p></td>
                 <td><p>${allorderinfo.oname }</p></td>
-                <td><p>${allorderinfo.ostate?"已启用":"已禁用" }</p></td>
                 <td><p>${allorderinfo.ouid }</p></td>
                 <td><p><fmt:formatDate value="${allorderinfo.otime }" pattern="yyyy年MM月dd日 HH:mm:ss"/></p></td>
                 <td>

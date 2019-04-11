@@ -31,7 +31,6 @@
 <body>
 <div><p>正在加载主页，请稍等...</p></div>
 <script>
-
     window.location.href = "${basePath }fileupload";
 </script>
 </body>

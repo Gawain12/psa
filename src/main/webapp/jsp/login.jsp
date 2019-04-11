@@ -12,15 +12,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>研究生学习评估系统-登录</title>
-    <link rel="shortcut icon" href="${basePath }img/favicon.ico"/>
-    <link rel="bookmark" href="${basePath }img/favicon.ico"/>
-    <link href="${basePath }weblib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${basePath }css/base.css" rel="stylesheet">
+    <link rel="shortcut icon" href="${basePath }/img/favicon.ico"/>
+    <link rel="bookmark" href="${basePath }/img/favicon.ico"/>
+    <link href="${basePath }/weblib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${basePath }/css/base.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <![endif]-->
     <style>
+
         h1.head{
             color:white;
             text-shadow:0 0 8px;
