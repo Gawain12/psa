@@ -27,22 +27,10 @@ public class OrderInfo implements Serializable {
      */
     private String osubject;
     /**
-     * 是否允许上传
-     */
-    private Boolean ostate;
-    /**
      * 修改时间
      */
     private Date otime;
-
-    public Boolean getOstate() {
-        return ostate;
-    }
-
-    public void setOstate(Boolean ostate) {
-        this.ostate = ostate;
-    }
-
+    
     public Date getOtime() {
         return otime;
     }

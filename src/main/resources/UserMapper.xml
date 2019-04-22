@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.system.login.dao.UserDao">
     <resultMap id="UserResult" type="User">
-        <id column="uid" property="uid" javaType="string" jdbcType="VARCHAR"/>
+        <id column="uid" property="uid" />
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
@@ -40,7 +40,7 @@
     <select id="findByPaging" parameterType="com.system.util.PagingVO" resultType="User">
         SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
         FROM user
-        WHERE percode = 'user'
+        WHERE percode = 'user' order by username asc
          <if test="toPageNo!=null and pageSize!=null">
         limit #{toPageNo},#{pageSize}
          </if>
@@ -50,24 +50,24 @@
         FROM user
         WHERE percode = 'user'
     </select>
-    <select id="isFirstLogin" parameterType="String" resultType="Boolean">
+    <select id="isFirstLogin" parameterType="int" resultType="Boolean">
         SELECT firstlogin
         FROM user
         WHERE uid = #{uid}
     </select>
 
-    <select id="getPasswdById" parameterType="String" resultType="String">
+    <select id="getPasswdById" parameterType="int" resultType="String">
         SELECT password
         FROM user
         WHERE uid = #{uid}
     </select>
 
-    <select id="getUserEntityByID" resultType="User" parameterType="String">
+    <select id="getUserEntityByID" resultType="User" parameterType="int">
         SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
         FROM user
-        WHERE uid = #{uid}
+        WHERE uid = #{uid} order by username asc
     </select>
-    <select id="getUserEntityByHid" resultType="User" parameterType="String">
+    <select id="getUserEntityByHid" resultType="User" parameterType="int">
         SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
         FROM user
         WHERE hid = #{hid}
@@ -76,7 +76,7 @@
     <select id="getUserList" resultType="User">
         SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
         FROM user
-        WHERE percode = 'user'
+        WHERE percode = 'user' order by username asc
     </select>
 
     <select id="getUserEntityByOpenID" parameterType="String" resultType="User">
@@ -85,12 +85,17 @@
         WHERE userOpenID = #{userOpenID}
     </select>
     <insert id="addStudent" parameterType="User">
-        INSERT INTO user(uid, username, password, headimg, firstlogin, name, percode, userOpenID)
-        VALUES  (#{uid}, #{username}, #{password}, #{headimg}, #{firstlogin},#{name},#{percode},#{userOpenID})
+        INSERT INTO user(username, password, headimg, firstlogin, name, percode, userOpenID)
+        VALUES  (#{username}, #{password}, #{headimg}, #{firstlogin},#{name},#{percode},#{userOpenID})
     </insert>
     <delete id="delStudentByUID" parameterType="int">
         DELETE
         FROM user
         WHERE uid = #{uid}
     </delete>
+    <update id="upStudent" parameterType="user">
+        UPDATE history
+        SET username  = #{username}, name = #{name}, uptime  = #{uptime}, password = #{password},
+        WHERE uid = #{uid}
+    </update>
 </mapper>

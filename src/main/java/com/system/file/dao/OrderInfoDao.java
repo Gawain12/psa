@@ -45,16 +45,6 @@ public interface OrderInfoDao {
      */
     OrderInfo getOrderInfoEntityByOID(Integer oid);
 
-    /**
-     * 更新作业批次信息
-     * Map中的KEY可有的值
-     * oname
-     * osubject
-     * ostate
-     *
-     * @param map 根据键更新值
-     */
-    void changeKeyByOID(Map<String, Object> map);
 
     /**
      * 新增作业批次

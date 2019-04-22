@@ -25,14 +25,14 @@ public interface HistoryDao {
      * @param huid 用户ID
      * @return 文件历史集合
      */
-    List<History> getUpListByUID(String huid);
+    List<History> getUpListByUID(int huid);
 
     /**
      * 根据ID删除上传历史
      *
      * @param delHid 历史ID
      */
-    void delEntityByHID(String delHid);
+    void delEntityByHID(int delHid);
 
     /**
      * 根据ID获取上传历史
@@ -40,7 +40,7 @@ public interface HistoryDao {
      * @param hid 历史ID
      * @return 上传历史记录
      */
-    History getEntityByHID(String hid);
+    History getEntityByHID(int hid);
 
     /**
      * 根据作业ID和用户ID查找上传历史<br>

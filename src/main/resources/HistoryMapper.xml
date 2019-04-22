@@ -14,17 +14,17 @@
         <result column="score" property="score"/>
     </resultMap>
     <insert id="insertDataByEntity" parameterType="com.system.file.entity.History">
-        INSERT INTO history(hid, huid, hoid, type, filepath, uptime, filesize,score)
-        VALUES (#{hid}, #{huid}, #{hoid}, #{type}, #{filepath}, #{uptime}, #{filesize}, #{score})
+        INSERT INTO history( huid, hoid, type, filepath, uptime, filesize,score,osid)
+        VALUES ( #{huid}, #{hoid}, #{type}, #{filepath}, #{uptime}, #{filesize}, #{score},#{osid})
     </insert>
 
-    <select id="getUpListByUID" parameterType="String" resultType="History">
-        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score
+    <select id="getUpListByUID" parameterType="int" resultType="History">
+        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score,osid
         FROM history
-        WHERE huid = #{huid}
+        WHERE huid = #{huid} order by osid asc
     </select>
 
-    <delete id="delEntityByHID" parameterType="String">
+    <delete id="delEntityByHID" parameterType="int">
         DELETE
         FROM history
         WHERE hid = #{delHid}
@@ -34,10 +34,10 @@
         FROM history
         WHERE hoid = #{hoid}
     </delete>
-    <select id="getEntityByHID" parameterType="String" resultType="History">
-        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score
+    <select id="getEntityByHID" parameterType="int" resultType="History">
+        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score,osid
         FROM history
-        WHERE hid = #{hid}
+        WHERE hid = #{hid} order by osid asc
     </select>
 
     <select id="findHuidExists" parameterType="map" resultType="History">
@@ -53,19 +53,19 @@
             filepath = #{filepath},
             uptime   = #{uptime},
             filesize = #{filesize},
-            score = #{score}
+            score = #{score},
+            osid = #{osid}
         WHERE hid =
               #{hid}
     </update>
     <update id="mark" parameterType="History">
         UPDATE history
         SET score = #{score}
-        WHERE hid =
-              #{hid}
+        WHERE hid =  #{hid}
     </update>
     <select id="findFileListByHoid" parameterType="int" resultType="History">
-        SELECT hid, huid, hoid, type, filepath, uptime, filesize, score
+        SELECT hid, huid, hoid, type, filepath, uptime, filesize, score,osid
         FROM history
-        WHERE hoid = #{hoid}
+        WHERE hoid = #{hoid} order by osid asc
     </select>
 </mapper>

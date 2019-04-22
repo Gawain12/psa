@@ -67,14 +67,14 @@ public interface FileService {
      * @param huid 用户ID
      * @return 用户上传的文件历史集合
      */
-    List<History> getUpListByUID(String huid);
+    List<History> getUpListByUID(int huid);
 
     /**
      * 根据上传历史ID删除历史纪录
      *
      * @param delHid 上传历史ID
      */
-    void delEntityByHID(String delHid);
+    void delEntityByHID(int delHid);
 
     /**
      * 根据上传历史ID获取上传信息
@@ -82,7 +82,7 @@ public interface FileService {
      * @param hid 上传历史ID
      * @return {@link History}
      */
-    History getEntityByHID(String hid);
+    History getEntityByHID(int hid);
 
     /**
      * 根据作业ID和用户ID查找上传历史<br>
@@ -117,7 +117,7 @@ public interface FileService {
      * @param uId 用户ID
      * @return 上传历史集合
      */
-    List<History> getUserHistoryByUserId(String uId);
+    List<History> getUserHistoryByUserId(int uId);
 
     /**
      * 上传文件
@@ -136,5 +136,5 @@ public interface FileService {
      * @return 删除成功否
      * @throws Exception Exception
      */
-    boolean deleteFile(User user, String hId) throws Exception;
+    boolean deleteFile(User user, int hId) throws Exception;
 }

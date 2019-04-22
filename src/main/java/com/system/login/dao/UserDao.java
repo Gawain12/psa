@@ -1,5 +1,6 @@
 package com.system.login.dao;
 
+import com.system.file.entity.History;
 import com.system.file.entity.OrderInfo;
 import com.system.login.entity.User;
 import com.system.util.PagingVO;
@@ -28,7 +29,7 @@ public interface UserDao {
      * @param uid 用户ID
      * @return 密码
      */
-    String getPasswdById(String uid);
+    String getPasswdById(int uid);
 
     /**
      * 获取是否为第一次登陆
@@ -36,7 +37,7 @@ public interface UserDao {
      * @param uid 用户ID
      * @return 第一次登陆返回<code>true</code>，否则返回<code>false</code>
      */
-    boolean isFirstLogin(String uid);
+    boolean isFirstLogin(int uid);
 
     /**
      * 根据用户名获取用户信息
@@ -51,7 +52,7 @@ public interface UserDao {
      *
      * @param map 用户ID，新密码
      */
-    void setUserPasswd(Map<String, String> map);
+    void setUserPasswd(Map<String, Object> map);
 
     /**
      * 根据用户ID设置登陆标记
@@ -66,7 +67,7 @@ public interface UserDao {
      * @param uid 用户ID
      * @return 用户信息
      */
-    User getUserEntityByID(String uid);
+    User getUserEntityByID(int uid);
 
     /**
      * 获取所有用户
@@ -89,13 +90,30 @@ public interface UserDao {
      * @param  {@link User}
      */
 
-    User getUserEntityByHid(String hid);
+    User getUserEntityByHid(int hid);
 
     List<User> findByPaging(PagingVO pagingVO) throws Exception;
 
+    /**
+     * 添加用户
+     * @param user
+     */
     void addStudent(User user);
 
+    /**
+     * 获取学生数
+     * @return
+     * @throws Exception
+     */
     int getCount() throws Exception;
 
+    /**
+     * 删除学生
+     * @param uid
+     */
     void delStudentByUID(Integer uid);
+    /**
+     * change the information of the students
+     */
+    void upStudent(User user);
      }

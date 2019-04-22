@@ -1,6 +1,5 @@
 package com.system.login.service.impl;
 
-import com.system.file.entity.OrderInfo;
 import com.system.login.dao.UserDao;
 import com.system.login.entity.User;
 import com.system.login.service.UserService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * 用户服务实现类
@@ -29,12 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getPasswdById(String uid) {
+    public String getPasswdById(int uid) {
         return userDao.getPasswdById(uid);
     }
 
     @Override
-    public boolean isFirstLogin(String uid) {
+    public boolean isFirstLogin(int uid) {
         return userDao.isFirstLogin(uid);
     }
 
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setUserPasswd(Map<String, String> map) {
+    public void setUserPasswd(Map<String, Object> map) {
         userDao.setUserPasswd(map);
     }
 
@@ -54,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserEntityByID(String uid) {
+    public User getUserEntityByID(int uid) {
         return userDao.getUserEntityByID(uid);
     }
 
@@ -69,9 +67,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserEntityByHid(String hid) {
+    public User getUserEntityByHid(int hid) {
         return userDao.getUserEntityByHid(hid);
     }
+
+    @Override
+    public void upStudent(User user){userDao.upStudent(user);}
 
     @Override
     public void delStudentByUID(Integer uid) {
@@ -79,8 +80,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addStudent(User user) {
-        user.setUid(UUID.randomUUID().toString().replace("-", ""));
+    public void addStudent(User user) throws Exception {
+   //     user.setUid(UUID.randomUUID().toString().replace("-", ""));
+        user.setUid(getCountStudent()+1);
         userDao.addStudent(user);
     }
 
@@ -94,5 +96,6 @@ public class UserServiceImpl implements UserService {
         //自定义查询对象
         return  this.userDao.getCount();
     }
+
 
 }

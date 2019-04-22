@@ -1,6 +1,5 @@
 package com.system.login.service;
 
-import com.system.login.dao.UserDao;
 import com.system.login.entity.User;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface UserService {
      * @param uid 用户ID
      * @return 密码
      */
-    String getPasswdById(String uid);
+    String getPasswdById(int uid);
 
     /**
      * 获取是否为第一次登陆
@@ -35,7 +34,7 @@ public interface UserService {
      * @param uid 用户ID
      * @return 第一次登陆返回<code>true</code>，否则返回<code>false</code>
      */
-    boolean isFirstLogin(String uid);
+    boolean isFirstLogin(int uid);
 
     /**
      * 根据用户名获取用户信息
@@ -50,7 +49,7 @@ public interface UserService {
      *
      * @param map 用户ID，新密码
      */
-    void setUserPasswd(Map<String, String> map);
+    void setUserPasswd(Map<String, Object> map);
 
     /**
      * 根据用户ID设置登陆标记
@@ -65,7 +64,7 @@ public interface UserService {
      * @param uid 用户ID
      * @return 用户信息
      */
-    User getUserEntityByID(String uid);
+    User getUserEntityByID(int uid);
 
     /**
      * 获取所有用户
@@ -104,9 +103,13 @@ public interface UserService {
      *
      * @param {@link User}
      */
-    User getUserEntityByHid(String hid);
+    User getUserEntityByHid(int hid);
 
     void addStudent(User user) throws Exception;
 
     void delStudentByUID(Integer uid);
+    /**
+     * change student info
+     */
+    void upStudent(User user);
 }

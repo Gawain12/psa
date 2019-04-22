@@ -38,7 +38,7 @@ public class Login {
     @RequestMapping("login")
     public String userLogin(Model model, HttpServletRequest request) throws LoginException {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        if (user != null && user.getUid() != null) {
+        if (user != null ) {
             return "redirect:index.jsp";
         }
         String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");

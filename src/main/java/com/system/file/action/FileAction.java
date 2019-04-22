@@ -108,8 +108,8 @@ public class FileAction {
             }
             return "jsp/cpasswd.jsp";
         }
-        String uid = user.getUid();
-        Map<String, String> map = new HashMap<>(2);
+        int uid = user.getUid();
+        Map<String, Object> map = new HashMap<>(2);
         map.put("uid", uid);
         map.put("password", password);
         String passwdById = userService.getPasswdById(uid);
@@ -121,7 +121,6 @@ public class FileAction {
             return "jsp/cpasswd.jsp";
         }
         // 条件判断 结束
-
         userService.setUserPasswd(map);
         if (FIRST_LOGIN_VALUE.equals(firstlogin)) {
             Map<String, Object> isfirst = new HashMap<>(2);
@@ -133,7 +132,7 @@ public class FileAction {
         return "fileupload";
     }
     @RequestMapping(value = "mark2", method = RequestMethod.POST)
-    public String mark2(Model model,String hid,History history) throws Exception {
+    public String mark2(Model model,int hid,History history) throws Exception {
 
         // 条件判断 开始
         History h = fileService.getEntityByHID(hid);
@@ -156,7 +155,7 @@ public class FileAction {
         return "jsp/cpasswd.jsp";
     }
     @RequestMapping("mark")
-    public String mark(String hid,Model model) {
+    public String mark(int hid,Model model) {
         History history = fileService.getEntityByHID(hid);
         model.addAttribute("history", history);
         return "jsp/mark.jsp";
@@ -198,7 +197,7 @@ public class FileAction {
         return "index.jsp";
     }
     @RequestMapping(value = "/studentAnalyse", method = RequestMethod.GET)
-    public String studentAnalyse(Model model,String uid) {
+    public String studentAnalyse(Model model,int uid) {
 
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         List<History> userHistoryList = fileService.getUserHistoryByUserId(uid);
@@ -236,8 +235,8 @@ public class FileAction {
      */
     @RequestMapping("delEntityByHID")
     @ResponseBody
-    public boolean delEntityByHID(String delHid) throws Exception {
-        if (delHid == null || "".equals(delHid)) {
+    public boolean delEntityByHID(int delHid) throws Exception {
+        if (delHid == 0 || "".equals(delHid)) {
             throw new FileException("删除失败：参数为空");
         }
         User user = (User) SecurityUtils.getSubject().getPrincipal();
@@ -252,8 +251,8 @@ public class FileAction {
      * @throws Exception Exception
      */
     @RequestMapping("downFile")
-    public void downLoadFile(String hid, HttpServletResponse response) throws Exception {
-        if (hid == null || "".equals(hid)) {
+    public void downLoadFile(int hid, HttpServletResponse response) throws Exception {
+        if (hid == 0 || "".equals(hid)) {
             throw new FileException("下载失败：参数为空！");
         }
         History history = fileService.getEntityByHID(hid);

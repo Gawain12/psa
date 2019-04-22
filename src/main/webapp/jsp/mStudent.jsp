@@ -34,6 +34,11 @@
             background: url("${basePath }/img/interstellar.jpg") fixed center;
             background-size: cover;
         }
+        h1 {font-color:white;}
+        .blur {
+            background: rgba(233, 233, 233, .9);
+            border-radius: 15px;
+        }
         #bs-collapse {
             line-height: 48px;
         }
@@ -45,7 +50,6 @@
         #bs-collapse {
             line-height: 48px;
         }
-
         tr > td > p {
             margin-top: 8px;
             margin-bottom: 8px;
@@ -53,7 +57,8 @@
     </style>
 </head>
 <body class="background">
-<!--头部--><header>
+<!--头部-->
+<header>
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="container-fluid">
@@ -94,8 +99,8 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content"></div>
                     </div>
-            </div>
                 </div>
+                    </div>
                 </section>
             <div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="delalert_id">
                 <h4 class="glyphicon glyphicon-warning-sign"> 确定删除吗？</h4>
@@ -121,9 +126,8 @@
                     <td>${item.name}</td>
                     <td>
                         <button class="btn btn-default  btn-info" onClick="location.href='${basePath }editStudent?uid=${item.uid}'">修改</button>
-                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除
-                            <button class="btn btn-info btn-warning"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
-                        </button>
+                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除</button>
+                        <button class="btn btn-info btn-warning"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
                         <!--弹出框-->
                     </td>
                 </tr>
@@ -153,16 +157,13 @@
                 </nav>
             </c:if>
         </div>
-    </div>
+            </div>
         </div>
-</div>
-</div>
+    </div>
 </div>
 </nav>
 </header>
 <!--/头部-->
-
-
 <!--内容-->
 <!--/内容-->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -171,55 +172,18 @@
 <script src="${basePath }weblib/bootstrap/js/bootstrap.min.js"></script>
 <script src="${basePath }js/base.js"></script>
 <script>
-    function add() {
-        var username = $("#username").val();
-        var name = $("#name").val();
-        var percode = $("#percode").val();
-        $.get("${basePath }addStudent?username=" + username + "&name=" + name + "&percode=" + percode, function (data) {
+    function del(uid) {
+        alert("删除成功！");
+        $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
             if (data) {
-                $('#addmodel').modal('hide');
                 window.location.reload();
-            } else {
-                $("#adderrormessage").removeClass("hidden");
             }
         });
     }
-    /* function del(uid) {
-         $.get("${basePath }delStudentByUID?uid=" + uid, function (data)
-         {
-            if (data) {
-                window.location.reload();
-            }
-        });
-    }*/
-       function del(uids) {
-           $("#delalert_id").removeClass("hidden");
-           uid=uids;
-       }
-       $("#delalert_true").click(function () {
-           $("#delalert_id").addClass("hidden");
-           $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
-            if (data) {
-                $("#alert_success").removeClass("alert-danger");
-                $("#alert_success").addClass("alert-success");
-                $("#alert_success").removeClass("hidden");
-                $("#" + hid).remove();
-                window.location.reload();
-                $("#del_message").text("文件已经成功删除！");
-            } else {
-                $("#alert_success").removeClass("alert-success");
-                $("#alert_success").addClass("alert-danger");
-                $("#alert_success").removeClass("hidden");
-                $("#del_message").text("文件删除失败！请检查网络连接！");
-            }
-        });
-    });
-    $("#delalert_cancel").click(function () {
-        $("#delalert_id").addClass("hidden");
-    });
-    $("#closealert_successdel").click(function () {
-        $("#alert_success").addClass("hidden");
-    });
+    function edit(uid) {
+        console.log("edit" + uid);
+    }
 </script>
+</div>
 </body>
 </html>

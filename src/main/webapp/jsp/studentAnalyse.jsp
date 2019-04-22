@@ -85,6 +85,7 @@
                 </td>
                 <td><p><c:if test="${empty userHistory.score}">未打分</c:if>${userHistory.score}</p></td>
                 </td>
+                </button><p style="display:none;" id="jsonStr">${userHistory.huid}</p>   </td>
             </tr>
         </c:forEach>
     </table>
@@ -101,7 +102,7 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
-    var huid = $("#huid").val();
+
     var option = {
         tooltip: {
             show: true
@@ -109,22 +110,28 @@
         legend: {
             data: ['学习情况']
         },
+        title: {
+            text: '学习情况'
+        },
         xAxis: [
             {
                 type: 'category',
-                data: (function(){
+                data: (function show(huid){
+                    var jsonStr = $("#jsonStr").html();
+     //               var obj = eval("(" + jsonStr + ")");
+     //               var huid = $("#huid").val();
                     var arr=[];
                     $.ajax({
                         type : "post",
                         async : false, //同步执行
-                        url : "${basePath }getAllecharts?uid=3",
-                        data : {},
+                        url : "${basePath }getAllecharts",
+                        data : {uid:jsonStr},
                         dataType : "json", //返回数据形式为json
                         success : function(json) {
                             if (json) {
                                 for(var i=0;i<json.length;i++){
                                     console.log(json[i].context);
-                                    arr.push(json[i].user.osubject);
+                                    arr.push(json[i].user.oname);
                                 }
                             }
                         },
@@ -148,11 +155,12 @@
                 'type': 'line',
                 'data':(function(){
                     var arr=[];
+                    var jsonStr = $("#jsonStr").html();
                     $.ajax({
                         type : "post",
                         async : false, //同步执行
-                        url : "${basePath }getAllecharts?uid=3",
-                        data : {},
+                        url : "${basePath }getAllecharts",
+                        data : {uid:jsonStr},
                         dataType : "json", //返回数据形式为json
                         success : function(json) {
                             if (json) {

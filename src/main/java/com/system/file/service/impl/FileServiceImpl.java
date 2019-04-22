@@ -42,13 +42,11 @@ public class FileServiceImpl implements FileService {
         //集合用于存储并清除重复下拉框数据
         Set<String> set = new HashSet<>();
         for (OrderInfo orderInfo : orderInfoList) {
-            if (orderInfo.getOstate()) {
                 set.add(orderInfo.getOsubject());
-            }
+
         }
         return set;
     }
-
     @Override
     public Set<String> getOrderInfoEntityOfAll(){
         List<OrderInfo> orderInfoList = orderInfoDao.getOrderInfoEntity();
@@ -71,17 +69,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<History> getUpListByUID(String huid) {
+    public List<History> getUpListByUID(int huid) {
         return historyDao.getUpListByUID(huid);
     }
 
     @Override
-    public void delEntityByHID(String delHid) {
+    public void delEntityByHID(int delHid) {
         historyDao.delEntityByHID(delHid);
     }
 
     @Override
-    public History getEntityByHID(String hid) {
+    public History getEntityByHID(int hid) {
         return historyDao.getEntityByHID(hid);
     }
 
@@ -103,7 +101,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<History> getUserHistoryByUserId(String uId) {
+    public List<History> getUserHistoryByUserId(int uId) {
         return this.getUpListByUID(uId).stream().peek(history -> {
             OrderInfo orderInfo = this.getOrderInfoEntityByOID(history.getHoid());
             if (orderInfo != null) {
@@ -119,9 +117,10 @@ public class FileServiceImpl implements FileService {
     public void uploadFile(MultipartFile file, User user) throws Exception {
         OrderInfo orderInfo = this.getOrderInfoEntityByOID(user.getUserSelectOid());
         History history = new History();
-        history.setHid(UUID.randomUUID().toString().replace("-", ""));
+   //     history.setHid(UUID.randomUUID().toString().replace("-", ""));
         history.setHuid(user.getUid());
         history.setHoid(orderInfo.getOid());
+        history.setOsid(orderInfo.getOsubject());
         String extensionName = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         String newfilename = user.getUsername() + user.getName() + orderInfo.getOsubject() + orderInfo.getOname() + extensionName;
         history.setFilepath(newfilename);
@@ -140,11 +139,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean deleteFile(User user, String hId) throws Exception {
+    public boolean deleteFile(User user, int hId) throws Exception {
         boolean isNotThisUser = true;
         List<History> historyList = this.getUpListByUID(user.getUid());
         for (History history : historyList) {
-            if (history.getHid().equals(hId)) {
+            if (history.getHid()==(hId)) {
                 isNotThisUser = false;
                 break;
             }

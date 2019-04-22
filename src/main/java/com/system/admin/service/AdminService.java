@@ -31,13 +31,6 @@ public interface AdminService {
     List<OrderInfo> getOrderInfoEntity(Integer toPageNo) throws Exception;
 
     /**
-     * 更新状态
-     *
-     * @param map map
-     */
-    void changeKeyByOID(Map<String, Object> map);
-
-    /**
      * 添加科目批次
      *
      * @param orderInfo 科目批次实体

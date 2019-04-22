@@ -13,11 +13,11 @@ public class History implements Serializable {
     /**
      * 唯一ID
      */
-    private String hid;
+    private int hid;
     /**
      * 对应的用户ID
      */
-    private String huid;
+    private int huid;
     /**
      * 科目ID
      */
@@ -49,6 +49,8 @@ public class History implements Serializable {
 
     private String score;
 
+    private String osid;
+
     public String getOsubject() {
         return osubject;
     }
@@ -65,19 +67,19 @@ public class History implements Serializable {
         this.oname = oname;
     }
 
-    public String getHid() {
+    public int getHid() {
         return hid;
     }
 
-    public void setHid(String hid) {
+    public void setHid(int hid) {
         this.hid = hid;
     }
 
-    public String getHuid() {
+    public int getHuid() {
         return huid;
     }
 
-    public void setHuid(String huid) {
+    public void setHuid(int huid) {
         this.huid = huid;
     }
 
@@ -124,5 +126,13 @@ public class History implements Serializable {
     public String getScore() { return score; }
 
     public void setScore(String score) { this.score = score; }
+
+    public String getOsid() {
+        return osid;
+    }
+
+    public void setOsid(String osid) {
+        this.osid = osid;
+    }
 }
 

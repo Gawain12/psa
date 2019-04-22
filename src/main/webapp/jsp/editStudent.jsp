@@ -1,104 +1,56 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- 引入bootstrap -->
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-	<!-- 引入JQuery  bootstrap.js-->
-	<script src="/js/jquery-3.2.1.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<!-- 顶栏 -->
-	<!-- 中间主体 -->
-		<div class="container" id="content">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="panel panel-default">
-				    <div class="panel-heading">
-						<div class="row">
-					    	<h1 style="text-align: center;">修改学生信息</h1>
-						</div>
-				    </div>
-				    <div class="panel-body">
-						<form class="form-horizontal" role="form" action="/admin/editStudent" id="editfrom" method="post">
-							  <div class="form-group ">
-							    <label for="inputEmail3" class="col-sm-2 control-label" >学号</label>
-							    <div class="col-sm-10">
-							      <input readonly="readonly" type="number" class="form-control" id="inputEmail3" name="userid" placeholder="请输入学号"
-								  <c:if test='${student!=null}'>
-										 value="${student.userid}"
-								  </c:if>>
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="inputPassword3" class="col-sm-2 control-label">姓名</label>
-							    <div class="col-sm-10">
-							      <input type="text" class="form-control" id="inputPassword3" name="username" placeholder="请输入姓名" value="${student.username}">
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
-							    <div class="col-sm-10">
-								    <label class="checkbox-inline">
-									   	<input type="radio" name="sex" value="男" checked>男
-									</label>
-									<label class="checkbox-inline">
-										<input type="radio" name="sex" value="女">女
-									</label>
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="inputPassword3" class="col-sm-2 control-label">出生年份</label>
-							    <div class="col-sm-10">
-								    <input type="date" value="<fmt:formatDate value="${student.birthyear}" dateStyle="medium" pattern="yyyy-MM-dd" />" name="birthyear"/>
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="inputPassword3" class="col-sm-2 control-label" name="grade">入学时间</label>
-							    <div class="col-sm-10">
-								    <input type="date" value="<fmt:formatDate value="${student.grade}" dateStyle="medium" pattern="yyyy-MM-dd" />" name="grade"/>
-							    </div>
-							  </div>
-							  <div class="form-group">
-							    <label for="inputPassword3" class="col-sm-2 control-label" name="grade">所属院系</label>
-							    <div class="col-sm-10">
-								    <select class="form-control" name="collegeid" id="college">
-										<c:forEach items="${collegeList}" var="item">
-											<option value="${item.collegeid}">${item.collegename}</option>
-										</c:forEach>
-								    </select>
-							    </div>
-							  </div>
-							  <div class="form-group" style="text-align: center">
-								<button class="btn btn-default" type="submit">提交</button>
-								<button class="btn btn-default" type="reset">重置</button>
-							  </div>
-						</form>
-				    </div>
-				</div>
-			</div>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<% String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	application.setAttribute("basePath", basePath);
+%>
+<form class="form-horizontal" method="post" action="${basePath }editStudent2" onsubmit="return check()" name="reset">
+	<h1>学生信息：</h1>
+	<div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="adderrormessage">
+		<button type="button" class="close" aria-label="Close" id="closemessage_id"><span
+				aria-hidden="true">&times;</span>
+		</button>
+		<strong>编辑失败!</strong> 请检查网络连接！
+	</div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-2 control-label">学生号</label>
+		<div class="col-sm-10">
+			<input   type="text" class="form-control" name="uid" value="${user.uid }">
 		</div>
 	</div>
-	<div class="container" id="footer">
-	<div class="row">
-		<div class="col-md-12"></div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-2 control-label">学号</label>
+		<div class="col-sm-10">
+			<input  type="text" class="form-control" name="filepath" id="inputEmail" value="${user.username }">
+		</div>
 	</div>
+	<div class="form-group">
+		<label for="inputEmail" class="col-sm-2 control-label">姓名</label>
+		<div class="col-sm-10">
+			<input  type="text" class="form-control" name="filepath" id="inputname" value="${user.name }">
+		</div>
 	</div>
-</body>
-	<script type="text/javascript">
-		$("#nav li:nth-child(2)").addClass("active")
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">密码</label>
+		<div class="col-sm-10">
+			<input type="text" name="password" class="form-control" id="inputPassword" value="${user.password }" placeholder="请输入密码">
+		</div>
+	</div>
+	<div class="form-group" style="text-align: center">
+		<button class="btn btn-default" type="submit">提交</button>
+		<button class="btn btn-default">重置</button>
+	</div>
+</form>
+<script>
+	$("#closemessage_id").click(function () {
+		$("#adderrormessage").addClass("hidden");
+	});
+	$("#nav li:nth-child(1)").addClass("active")
+	function check() {
+		if(reset.score.value==""||reset.score.value==null)
+		{alert("请输入成绩");return false;}
+	}
 
-        var collegeSelect = $("#college option");
-        for (var i=0; i<collegeSelect.length; i++) {
-            if (collegeSelect[i].value == '${student.collegeid}') {
-                collegeSelect[i].selected = true;
-            }
-        }
-	</script>
-</html>
+</script>

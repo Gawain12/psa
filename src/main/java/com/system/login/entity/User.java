@@ -12,12 +12,8 @@ public class User implements Serializable {
     /**
      * 用户唯一ID
      */
-    private String uid;
+    private int uid;
 
-    private String userid;
-    /**
-     * 用户名
-     */
     private String username;
     /**
      * 密码
@@ -78,12 +74,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUid(int uid) { this.uid = uid;
     }
 
     public String getUsername() {
@@ -118,11 +113,4 @@ public class User implements Serializable {
         this.firstlogin = firstlogin;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
 }

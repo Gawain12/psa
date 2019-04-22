@@ -110,7 +110,6 @@
         </tr>
         <tbody>
         <c:forEach items="${allOrderInfo }" var="allorderinfo">
-            <tr <c:if test="${!allorderinfo.ostate}">class='danger'</c:if> id="${allorderinfo.oid }">
                 <td><p>${allorderinfo.osubject }</p></td>
                 <td><p>${allorderinfo.oname }</p></td>
                 <td><p>${allorderinfo.ouid }</p></td>
@@ -157,8 +156,6 @@
 <script src="${basePath }weblib/bootstrap/js/bootstrap.min.js"></script>
 <script src="${basePath }js/base.js"></script>
 <script>
-
-
     function del(oid) {
         $.get("${basePath }delOrderinfoByOID?oid=" + oid, function (data) {
             if (data) {
@@ -166,7 +163,6 @@
             }
         });
     }
-
     function edit(oid) {
         console.log("edit" + oid);
     }

@@ -108,7 +108,7 @@ public class AdminAction {
      * @return
      */
     @RequestMapping("/getAllecharts")
-    public void getAllecharts(HttpServletRequest request, HttpServletResponse response,String uid)throws Exception{
+    public void getAllecharts(HttpServletRequest request, HttpServletResponse response,int uid)throws Exception{
 
     /*    List m = (List) new  ArrayList();
         JSONArray jsons = new JSONArray();
@@ -250,7 +250,8 @@ public class AdminAction {
       //  String userid = user.getUserid();
      //   String uid = user.getName();
 
-        user.setUid(UUID.randomUUID().toString().replace("-", ""));
+     //   user.setUid(userDao.getCountStudent()+1);
+    //    user.setUid(UUID.randomUUID().toString().replace("-", ""));
         user.setFirstlogin(firstlogin);
         user.setPassword(password);
         user.setHeadimg(headimg);
@@ -358,13 +359,11 @@ public class AdminAction {
         if (orderInfo.getOname() == null) {
             return false;
         }
-        boolean Ostate = true;
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         String Ouid= user.getName();
         orderInfo.setOuid(Ouid);
         int oid = (orderInfo.getOname().hashCode()) + (orderInfo.getOsubject().hashCode());
         orderInfo.setOid(oid);
-        orderInfo.setOstate(Ostate);
         orderInfo.setOtime(new Date());
         adminService.addOrderInfo(orderInfo,user);
         return true;
@@ -422,23 +421,24 @@ public class AdminAction {
         return "jsp/mStudent.jsp";
 
     }
-   /* @RequestMapping(value = "/mark", method = {RequestMethod.GET})
-    public String markUI(SelectedCourseCustom scc, Model model) throws Exception {
-
-        SelectedCourseCustom selectedCourseCustom = selectedCourseService.findOne(scc);
-
-        model.addAttribute("selectedCourse", selectedCourseCustom);
-
-        return "jsp/mark";
+    @RequestMapping("editStudent")
+    public String editStudent(int uid,Model model) {
+        User user = userService.getUserEntityByID(uid);
+        model.addAttribute("user", user);
+        return "jsp/editStudent.jsp";
     }
 
-    // 打分
-    @RequestMapping(value = "/mark", method = {RequestMethod.POST})
-    public String mark(SelectedCourseCustom scc) throws Exception {
+    @RequestMapping(value = "editStudent2", method = RequestMethod.POST)
+    public String editStudent2(Model model,int uid,User user) throws Exception {
 
-        selectedCourseService.updataOne(scc);
-
-        return "redirect:/jsp/gradeCourse?id="+scc.getCourseid();
-    }*/
+        // 条件判断 开始
+        User u = userService.getUserEntityByID(uid);
+        model.addAttribute("user", u);
+        u.setUsername(user.getUsername());
+        u.setName(user.getName());
+        u.setPassword(user.getPassword());
+        userService.upStudent(u);
+        return "jsp/mStudent.jsp";
+    }
 
 }
