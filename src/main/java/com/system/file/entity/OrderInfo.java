@@ -63,7 +63,6 @@ public class OrderInfo implements Serializable {
         this.osubject = osubject;
     }
 
-
     public String getOuid() {
         return ouid;
     }

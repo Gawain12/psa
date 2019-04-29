@@ -76,7 +76,7 @@ public class FileAction {
         //用户上传历史实体
         List<History> userHistoryList = fileService.getUserHistoryByUserId(user.getUid());
         //下拉框数据
-        model.addAttribute("orderInfoList", fileService.getOrderInfoEntity());
+        model.addAttribute("orderInfoList", fileService.getOrderInfoEntityOfAll());
         model.addAttribute("user", user);
         model.addAttribute("userHistoryList", userHistoryList);
         return "jsp/fileupload.jsp";
@@ -180,7 +180,7 @@ public class FileAction {
      * 文件上传方法
      *
      * @param file {@link MultipartFile}
-     * @return index.jsp
+     * @return loading.jsp
      * @throws Exception Exception
      */
     @RequestMapping("fileup")
@@ -194,17 +194,19 @@ public class FileAction {
                 fileService.uploadFile(file1, user);
             }
         }
-        return "index.jsp";
+        return "loading.jsp";
     }
     @RequestMapping(value = "/studentAnalyse", method = RequestMethod.GET)
     public String studentAnalyse(Model model,int uid) {
 
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        List<History> userHistoryList = fileService.getUserHistoryByUserId(uid);
         model.addAttribute("user", user);
+        User student = userService.getUserEntityByID(uid);
+        List<History> userHistoryList = fileService.getUserHistoryByUserId(uid);
         //下拉框数据
-        model.addAttribute("orderInfoList", fileService.getOrderInfoEntity());
+        model.addAttribute("orderInfoList", fileService.getOrderInfoEntityOfAll());
         model.addAttribute("userHistoryList", userHistoryList);
+        model.addAttribute("student", student);
         // ModelAndView modelAndView = new ModelAndView("jsp/studentAnalyse.jsp");
         // modelAndView.addObject("title", "Line Chart");
         return "jsp/studentAnalyse.jsp";

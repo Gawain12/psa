@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>研究生学习评测系统-后台管理</title>
+    <title>任务管理-研究生学习评测系统</title>
     <link rel="shortcut icon" href="${basePath }img/favicon.ico"/>
     <link rel="bookmark" href="${basePath }img/favicon.ico"/>
     <link href="${basePath }weblib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -46,11 +46,66 @@
         {
             border-collapse:collapse;
             border:2px solid gray;
+            width: 250px;
         }
         tr > td > p {
             margin-top: 8px;
             margin-bottom: 8px;
         }
+        .col-md-10
+        {
+            width:100%;
+        }
+        input{
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            height: 30px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+        }
+        input:focus{
+            border-color: #66afe9;
+            outline: 0;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+        }
+        .button {
+            justify-content: center;
+            align-items: center;
+            display: inline-block;
+            padding: 0px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            height:33px ;
+            border-radius: 15px;
+            box-shadow: 0 4px #999;
+            border: none;
+        }
+        .button1 {
+            height:55px ;
+            border-radius: 50%;
+            background-color: #808040;
+            font-size: 19px;
+            padding: 12px 18px;
+        }
+        .button2 {
+            background-color: #4F9D9D;
+        }
+        .button3 {
+            background-color: #7373B9;
+        }
+        .button4 {
+            background-color: #804040;
+        }
+        .button:hover {background-color: #A6A600}
+
     </style>
 </head>
 <body class="background">
@@ -73,8 +128,8 @@
                     </div>
                 </div>
                 <div class="collapse navbar-collapse navbar-right" id="bs-collapse">
-                    <span><a href="${basePath }logout" class="btn btn-danger">退出</a></span>
-                    <span><a href="${basePath }cpasswd" class="btn btn-primary">修改密码</a></span>
+                    <button name="quit"onclick="window.location.href='${basePath }logout'" class="button button2" style="height:48px;font-size: 17px" ;>退出</button>
+                    <button name="back"onclick="window.location.href='${basePath }admin'" class="button button4"style="height:48px;font-size: 17px" >返回主页</button>
                 </div>
             </div>
         </div>
@@ -87,39 +142,68 @@
  <section>
     <div class="container">
         <h1>任务管理</h1>
-        <span><a href="${basePath }admin" class="btn btn-danger">返回文件页面</a></span>
-        <button type="button" id="upfilebutton_id" class="btn btn-primary"
+        <button type="button" id="upfilebutton_id" class="button button1"
                 data-toggle="modal" data-remote="${basePath }jsp/addsubjectui.jsp" data-target=".bs-modal-lg">添加任务或内容
         </button>
+        <button type="button" id="btn" onclick="display()"class="button button3">编辑内容</button>
         <div class="modal fade bs-modal-lg" id="addmodel" tabindex="-1" role="dialog"
              aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content"></div>
             </div>
         </div>
-    </div>
+    </div><br/>
  </section>
 <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover" id="edit"  style="display:none">
         <tr>
             <td>任务名称</td>
             <td>具体内容</td>
-            <td>发布教师</td>
+            <td>上次操作教师</td>
             <td>上次操作时间</td>
             <td>操作</td>
         </tr>
-        <tbody>
+        <tbody >
+
         <c:forEach items="${allOrderInfo }" var="allorderinfo">
+            <tr>
                 <td><p>${allorderinfo.osubject }</p></td>
-                <td><p>${allorderinfo.oname }</p></td>
+                <td class="oname"><p>${allorderinfo.oname }</p>
+                        <form action="${basePath }updateName" method="post" class="changename"  type="hidden">
+                        <input type="hidden" name="oid" value="${allorderinfo.oid }"/>
+                        <input type="text" name="oname" class="input" />
+                        <input type="submit" value="保存" class="button button2" id="saveName">
+                       <%-- <a href="#" class="resetName" id="resetName" id="cancel" onclick="display()">X</a>--%>
+                        </form>
+                </td>
                 <td><p>${allorderinfo.ouid }</p></td>
                 <td><p><fmt:formatDate value="${allorderinfo.otime }" pattern="yyyy年MM月dd日 HH:mm:ss"/></p></td>
-                <td>
-                    <button type="button" class="btn btn-info btn-warning" onclick="edit(${allorderinfo.oid })">编辑
-                    </button>
-                    <button type="button" class="btn btn-info btn-danger" onclick="del(${allorderinfo.oid })">删除
+                <td class="oname">
+                    <button type="button" class="button button4" onclick="del(${allorderinfo.oid })">删除
                     </button>
                 </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+        <table class="table table-hover" id="order">
+            <tr>
+                <td>任务名称</td>
+                <td>具体内容</td>
+                <td>上次操作教师</td>
+                <td>上次操作时间</td>
+                <td>操作</td>
+            </tr>
+        <tbody   >
+        <c:forEach items="${allOrderInfo }" var="allorderinfo" >
+            <tr>
+            <td><p>${allorderinfo.osubject }</p></td>
+            <td class="oname"><p>${allorderinfo.oname }</p></td>
+            <td><p>${allorderinfo.ouid }</p></td>
+            <td><p><fmt:formatDate value="${allorderinfo.otime }" pattern="yyyy年MM月dd日 HH:mm:ss"/></p></td>
+            <td class="oname">
+                <button type="button" class="button button4" onclick="del(${allorderinfo.oid })">删除
+                </button>
+            </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -163,8 +247,29 @@
             }
         });
     }
-    function edit(oid) {
-        console.log("edit" + oid);
+   /* function lclose()
+    {
+        var ad=document.getElementById("edit")
+        ad.style.display=(ad.style.display == 'none')?'block':'none';
+    }*/
+    var order=document.getElementById("order");
+    var edit=document.getElementById("edit");
+    var btn=document.getElementById("btn");
+    var cancel=document.getElementById("cancel");
+    var flag=false;
+   function display(){
+        if(flag){
+            order.style.display="block";
+            edit.style.display="none";
+            $("#btn").html('编辑内容');
+            flag=false;
+        }
+        else{
+            edit.style.display="block";
+            order.style.display="none";
+            $("#btn").html('取消编辑');
+            flag=true;
+        }
     }
 </script>
 </div>

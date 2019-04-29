@@ -31,13 +31,15 @@
             limit #{toPageNo},#{pageSize}
         </if>
     </select>
-
+    <select id="getOrderInfoEntityAll" resultType="OrderInfo">
+        SELECT oid, oname, osubject, otime,ouid
+        FROM orderinfo order by osubject asc
+    </select>
     <select id="getOrderInfoEntityByOID" resultType="OrderInfo" parameterType="int">
         SELECT oid, oname, osubject, otime,ouid
         FROM orderinfo
         WHERE oid = #{oid} order by osubject asc
     </select>
-
     <insert id="addOrderInfo" parameterType="OrderInfo">
         INSERT INTO orderinfo(oname, osubject, otime, ouid)
         VALUES ( #{oname}, #{osubject}, #{otime}, #{ouid})
@@ -47,4 +49,9 @@
         FROM orderinfo
         WHERE oid = #{oid}
     </delete>
+    <update id="updateOn" parameterType="OrderInfo">
+        UPDATE orderinfo
+        SET oname  = #{oname},ouid= #{ouid}
+        WHERE oid = #{oid}
+    </update>
 </mapper>

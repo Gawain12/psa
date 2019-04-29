@@ -6,7 +6,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
     application.setAttribute("basePath", basePath);
 %>
-<button type="button" class="btn btn-success" style="margin-bottom: 10px" onclick="downall()">全部下载</button>
+<button type="button" class="button button5" style="margin-bottom: 10px" onclick="downall()">全部下载</button>
 <span id="total"></span>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -37,14 +37,14 @@
                     </p>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-info" onclick="down('${filelist.hid }')"
+                    <button type="button" class="button button3" onclick="down('${filelist.hid }')"
                             <c:if test="${filelist.uptime==null}">disabled='disabled'</c:if>>下载
                     </button>
-                    <button type="button" id="score_id" class="btn btn-primary"
+                    <button type="button" id="score_id" class="button button4"
                             <c:if test="${not empty filelist.score||filelist.uptime==null}">disabled='disabled'</c:if>
                             data-toggle="modal" a href="${basePath }mark?hid=${filelist.hid }" data-target=".bs-modal-lg">打分
                     </button>
-                </td>svz
+                </td>
             </tr>
         </c:forEach>
     </table>

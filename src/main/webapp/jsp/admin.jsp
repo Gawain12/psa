@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>研究生学习评测系统-后台管理</title>
+    <title>研究生学习评测系统-打分管理</title>
     <link rel="shortcut icon" href="${basePath }img/favicon.ico"/>
     <link rel="bookmark" href="${basePath }img/favicon.ico"/>
     <link href="${basePath }weblib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,7 @@
             margin-right: 10px;
         }
         .background {
+
             background: url("${basePath }/img/interstellar.jpg") fixed center;
             background-size: cover;
         }
@@ -51,18 +52,51 @@
             margin-top: 8px;
             margin-bottom: 8px;
         }
+        .button {
+            justify-content: center;
+            align-items: center;
+            display: inline-block;
+            padding: 0px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            height:33px ;
+            border-radius: 15px;
+            box-shadow: 0 4px #999;
+            border: none;
+        }
+        .button5 {
+            height:55px ;
+            border-radius: 50%;
+            background-color: #808040;
+            font-size: 19px;
+            padding: 12px 18px;
+        }
+        .button2 {
+            background-color: #4F9D9D;
+        }
+        .button3 {
+            background-color: #7373B9;
+        }
+        .button4 {
+            background-color: #804040;
+        }
+        .button:hover {background-color: #A6A600}
         .button1 {
             display:inline-block;
             border-radius:4px;
-            background-color:#f4511e;
+            background-color:#4F9D9D;
             trasnsition:all 0.5s;
             cursor:pointer;
             color:#FFFFFF;
-            font-size:30px;
-            padding:20px;
+            font-size:25px;
             width:180px;
             height:60px;
             margin:2px;
+
         }
         .button1 span{
             cursor:pointer;
@@ -99,8 +133,6 @@
                             data-target="#bs-collapse" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
                     </button>
                     <div class="userinfo">
                         <img src="${basePath }img/headdefault.jpg" alt="headImg" class="img-circle" style="width: 30px">
@@ -108,9 +140,9 @@
                     </div>
                 </div>
                 <div class="collapse navbar-collapse navbar-right" id="bs-collapse">
-                    <span><a href="${basePath }logout" class="btn btn-danger">退出</a></span>
-                    <span><a href="${basePath }cpasswd" class="btn btn-primary">修改密码</a></span>
-                    <span><a href="${basePath }mStudent" class="btn btn-danger">查看学生信息</a></span>
+
+                    <button name="password"onclick="window.location.href='${basePath }cpasswd'" style="height:48px;font-size: 17px" class="button button3">修改密码</button>
+                    <button name="quit"onclick="window.location.href='${basePath }logout'" class="button button4" style="height:48px;font-size: 17px" ;>退出</button>
                 </div>
             </div>
         </div>
@@ -119,21 +151,25 @@
 <!--/头部-->
 <section>
     <div class="container">
-        <h1>任务管理</h1>
-        <button type="button" class="button1"  onclick="entry()" ><span>进入</span></button>
+        <tr>
+            <td><button type="button" class="button1"  style="background:#7373B9" onclick="student()"><span>管理学生</span></button></td><br/>
+            <td><button type="button" class="button1"  onclick="order()" ><span>管理任务</span></button></td><br/>
+        </tr>
+
     </div>
-    <div class="modal fade bs-modal-lg" id="addmodel" tabindex="-1" role="dialog"
+    <div class="modal fade bs-modal-lg" id="markmodel" tabindex="-1" role="dialog"
          aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content"></div>
         </div>
+    </div>
 </section>
 
 <!--内容-->
 <section>
     <div class="container blur">
         <div>
-            <h1>下载已上传的任务</h1>
+            <h1>下载已上传的任务并打分</h1>
             <label for="subject_ID">
                 <select name="subject" id="subject_ID" class="form-control">
                     <option value="none">请选择任务...</option>
@@ -190,8 +226,11 @@
             $("#fileList").load("${basePath }getFileList?hoid=" + file_oid);
         }
     });
-    function entry() {
+    function order() {
         window.open("${basePath }subjectui", "_blank");
+    }
+    function student() {
+        window.open("${basePath }mStudent", "_blank");
     }
 </script>
 </body>

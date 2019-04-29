@@ -7,6 +7,7 @@
     application.setAttribute("basePath", basePath);
 %>
 <form class="form-horizontal">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h1>添加任务内容：</h1>
     <div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="adderrormessage">
         <button type="button" class="close" aria-label="Close" id="closemessage_id"><span
@@ -31,6 +32,7 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-default" onclick="add()">添加</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         </div>
     </div>
 </form>

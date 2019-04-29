@@ -62,9 +62,7 @@ public class AdminServiceImpl implements AdminService {
         return  this.orderInfoDao.getOrderCount();
     }
     @Override
-    public void addOrderInfo(OrderInfo orderInfo, User user){
-        String Ouid= user.getName();
-        orderInfo.setOuid(Ouid);
+    public void addOrderInfo(OrderInfo orderInfo){
         orderInfoDao.addOrderInfo(orderInfo);
     }
 

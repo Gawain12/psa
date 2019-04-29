@@ -23,7 +23,16 @@
         FROM history
         WHERE huid = #{huid} order by osid asc
     </select>
-
+    <select id="getUpListByWeek" parameterType="int" resultType="History">
+        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score,osid
+        FROM history
+        WHERE huid = #{huid} and YEARWEEK(date_format(uptime,'%Y-%m-%d')) = YEARWEEK(now()) order by osid asc
+    </select>
+    <select id="getUpListByMonth" parameterType="int" resultType="History">
+        SELECT hid, huid, hoid, type, filepath, uptime, filesize,score,osid
+        FROM history
+        WHERE huid = #{huid} and date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m') order by osid asc
+    </select>
     <delete id="delEntityByHID" parameterType="int">
         DELETE
         FROM history

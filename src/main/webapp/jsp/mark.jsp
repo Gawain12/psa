@@ -15,21 +15,21 @@
 		<strong>打分失败!</strong> 请检查网络连接！
 	</div>
 			<div class="form-group">
-				<label for="inputEmail" class="col-sm-2 control-label">文件号</label>
+				<label for="filenumber" class="col-sm-2 control-label">文件号</label>
 				<div class="col-sm-10">
-					<input  readonly="readonly" type="text" class="form-control" name="hid" value="${history.hid }">
+					<input  readonly="readonly" type="text" class="form-control" name="hid" id="filenumber"value="${history.hid }">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="inputEmail" class="col-sm-2 control-label">文件名</label>
+				<label for="filename" class="col-sm-2 control-label">文件名</label>
 				<div class="col-sm-10">
-					<input  readonly="readonly" type="text" class="form-control" name="filepath" id="inputEmail" value="${history.filepath }">
+					<input  readonly="readonly" type="text" class="form-control" name="filepath" id="filename" value="${history.filepath }">
 				</div>
 			</div>
 	<div class="form-group">
-		<label for="inputPassword3" class="col-sm-2 control-label">成绩</label>
+		<label for="score" class="col-sm-2 control-label">成绩</label>
 		<div class="col-sm-10">
-			<input type="number" name="score" class="form-control" id="inputPassword3" placeholder="请输入成绩">
+			<input type="number" name="score" class="form-control" id="score" placeholder="请输入成绩">
 		</div>
 	</div>
 	<div class="form-group" style="text-align: center">

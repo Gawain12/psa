@@ -19,10 +19,7 @@ public class User implements Serializable {
      * 密码
      */
     private String password;
-    /**
-     * 头像(目前没用)
-     */
-    private String headimg;
+
     /**
      * 是否是第一次登陆
      */
@@ -39,16 +36,6 @@ public class User implements Serializable {
      * 角色
      */
     private String percode;
-
-    private String userOpenID;
-
-    public String getUserOpenID() {
-        return userOpenID;
-    }
-
-    public void setUserOpenID(String userOpenID) {
-        this.userOpenID = userOpenID;
-    }
 
     public String getPercode() {
         return percode;
@@ -95,14 +82,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getHeadimg() {
-        return headimg;
-    }
-
-    public void setHeadimg(String headimg) {
-        this.headimg = headimg;
     }
 
     public Boolean getFirstlogin() {

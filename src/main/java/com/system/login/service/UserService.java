@@ -96,8 +96,6 @@ public interface UserService {
      */
     int getCountStudent() throws Exception;
 
-    User getUserEntityByOpenID(String userOpenID);
-
     /**
      * 根据用户ID插入用户OPEN ID
      *

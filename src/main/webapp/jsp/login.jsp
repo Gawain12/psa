@@ -21,16 +21,15 @@
     <!--[if lt IE 9]>
     <![endif]-->
     <style>
-
         h1.head{
             color:white;
             text-shadow:0 0 8px;
             margin-top:60px;
+            text-align: center;
         }
         .form-control {
             margin-bottom: 20px;
         }
-
         .col-md-6 {
             margin-top: 1em;
         }
@@ -42,14 +41,29 @@
             background: rgba(233, 233, 233, .6);
             border-radius: 10px;
         }
-
+        .button {
+             justify-content: center;
+             display: inline-block;
+             cursor: pointer;
+             text-align: center;
+             text-decoration: none;
+             outline: none;
+             color: #fff;
+             width: 250px;
+             box-shadow: 0 4px #999;
+             border: none; height:65px ;
+             border-radius: 50%;
+             background-color: #808040;
+             font-size: 30px;
+             padding: 12px 25px;
+            margin: 0;
+         }
     </style>
 </head>
 <body class="background">
-
 <section>
     <div class="container blur">
-        <h1 class="head" >CUIT研究生学习管理系统</h1>
+        <h1 class="head" >CUIT研究生学习考核系统</h1>
         <form class="form-signin" method="post" action="${basePath }login">
             <h2 class="form-signin-heading">请登录：<p style="color: red" id="errorinfo_id">${returninfo }</p></h2>
             <div class="form-group" id="Id_div">
@@ -67,10 +81,8 @@
                     <input type="checkbox" name="rememberMe"> 记住我
                 </label>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <button class="btn btn-lg btn-primary btn-block" type="button" id="submit_id">登录</button>
-                </div>
+            <div class="row" style="text-align:center">
+                    <button class="button" type="button" id="submit_id">登  录</button>
             </div>
         </form>
         <p style="height: 8px"></p>

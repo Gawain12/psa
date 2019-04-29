@@ -36,7 +36,7 @@ public class FileServiceImpl implements FileService {
         return orderInfoDao.getONameBySubjectOfAll(oname);
     }
 
-    @Override
+   /* @Override
     public Set<String> getOrderInfoEntity(){
         List<OrderInfo> orderInfoList = orderInfoDao.getOrderInfoEntity();
         //集合用于存储并清除重复下拉框数据
@@ -46,10 +46,10 @@ public class FileServiceImpl implements FileService {
 
         }
         return set;
-    }
+    }*/
     @Override
     public Set<String> getOrderInfoEntityOfAll(){
-        List<OrderInfo> orderInfoList = orderInfoDao.getOrderInfoEntity();
+        List<OrderInfo> orderInfoList = orderInfoDao.getOrderInfoEntityAll();
         //集合用于存储并清除重复下拉框数据
         Set<String> set = new HashSet<>();
         for (OrderInfo orderInfo : orderInfoList) {
@@ -71,6 +71,17 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<History> getUpListByUID(int huid) {
         return historyDao.getUpListByUID(huid);
+    }
+
+
+    @Override
+    public List<History> getUpListByWeek(int huid) {
+        return historyDao.getUpListByWeek(huid);
+    }
+
+    @Override
+    public List<History> getUpListByMonth(int huid) {
+        return historyDao.getUpListByMonth(huid);
     }
 
     @Override
@@ -95,6 +106,10 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void mark(History history){historyDao.mark(history);}
+
+    @Override
+    public void updateOn(OrderInfo oi){orderInfoDao.updateOn(oi);}
+
     @Override
     public void delEntityByHOID(Integer hoid) {
         historyDao.delEntityByHoId(hoid);
@@ -159,5 +174,29 @@ public class FileServiceImpl implements FileService {
         this.delEntityByHID(hId);
         //文件未被删除且存在
         return !file.exists() || file.delete();
+    }
+    @Override
+    public List<History> getUserHistoryByWeek(int uid) {
+        return this.getUpListByWeek(uid).stream().peek(history -> {
+            OrderInfo orderInfo = this.getOrderInfoEntityByOID(history.getHoid());
+            if (orderInfo != null) {
+                history.setOsubject(orderInfo.getOsubject());
+                history.setOname(orderInfo.getOname());
+                //设置文件扩展名
+                history.setFilepath(history.getFilepath().substring(history.getFilepath().lastIndexOf(".") + 1));
+            }
+        }).collect(Collectors.toList());
+    }
+    @Override
+    public List<History> getUserHistoryByMonth(int uid) {
+        return this.getUpListByMonth(uid).stream().peek(history -> {
+            OrderInfo orderInfo = this.getOrderInfoEntityByOID(history.getHoid());
+            if (orderInfo != null) {
+                history.setOsubject(orderInfo.getOsubject());
+                history.setOname(orderInfo.getOname());
+                //设置文件扩展名
+                history.setFilepath(history.getFilepath().substring(history.getFilepath().lastIndexOf(".") + 1));
+            }
+        }).collect(Collectors.toList());
     }
 }

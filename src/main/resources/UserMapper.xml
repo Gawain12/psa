@@ -9,9 +9,7 @@
         <result property="password" column="password"/>
         <result property="name" column="name"/>
         <result property="firstlogin" column="firstlogin"/>
-        <result property="headimg" column="headimg"/>
         <result property="percode" column="percode"/>
-        <result property="userOpenID" column="userOpenID"/>
     </resultMap>
 
     <select id="getPasswd" parameterType="String" resultType="String">
@@ -21,7 +19,7 @@
     </select>
 
     <select id="getUserEntity" parameterType="String" resultType="User">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
+        SELECT uid, username, password, firstlogin, name, percode
         FROM user
         WHERE username = #{username}
     </select>
@@ -38,7 +36,7 @@
         WHERE uid = #{uid}
     </update>
     <select id="findByPaging" parameterType="com.system.util.PagingVO" resultType="User">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
+        SELECT uid, username, password, firstlogin, name, percode
         FROM user
         WHERE percode = 'user' order by username asc
          <if test="toPageNo!=null and pageSize!=null">
@@ -63,30 +61,25 @@
     </select>
 
     <select id="getUserEntityByID" resultType="User" parameterType="int">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
+        SELECT uid, username, password, firstlogin, name, percode
         FROM user
         WHERE uid = #{uid} order by username asc
     </select>
     <select id="getUserEntityByHid" resultType="User" parameterType="int">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
+        SELECT uid, username, password, firstlogin, name, percode
         FROM user
         WHERE hid = #{hid}
     </select>
 
     <select id="getUserList" resultType="User">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
+        SELECT uid, username, password, firstlogin, name, percode
         FROM user
         WHERE percode = 'user' order by username asc
     </select>
 
-    <select id="getUserEntityByOpenID" parameterType="String" resultType="User">
-        SELECT uid, username, password, headimg, firstlogin, name, percode, userOpenID
-        FROM user
-        WHERE userOpenID = #{userOpenID}
-    </select>
     <insert id="addStudent" parameterType="User">
-        INSERT INTO user(username, password, headimg, firstlogin, name, percode, userOpenID)
-        VALUES  (#{username}, #{password}, #{headimg}, #{firstlogin},#{name},#{percode},#{userOpenID})
+        INSERT INTO user(username, password, firstlogin, name, percode)
+        VALUES  (#{username}, #{password}, #{firstlogin},#{name},#{percode})
     </insert>
     <delete id="delStudentByUID" parameterType="int">
         DELETE
@@ -94,8 +87,8 @@
         WHERE uid = #{uid}
     </delete>
     <update id="upStudent" parameterType="user">
-        UPDATE history
-        SET username  = #{username}, name = #{name}, uptime  = #{uptime}, password = #{password},
+        UPDATE user
+        SET username  = #{username}, name = #{name},  password = #{password}
         WHERE uid = #{uid}
     </update>
 </mapper>

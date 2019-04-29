@@ -75,4 +75,10 @@ public interface HistoryDao {
     void delEntityByHoId(Integer hoid);
 
     void mark(History history);
+    /**
+     *get lastweek
+     */
+    List<History> getUpListByWeek(int huid);
+
+    List<History> getUpListByMonth(int huid);
 }

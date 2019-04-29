@@ -36,7 +36,7 @@ public interface OrderInfoDao {
      */
     List<OrderInfo> getOrderInfoEntity(PagingVO pagingVO)throws Exception;
 
-    List<OrderInfo> getOrderInfoEntity();
+    List<OrderInfo> getOrderInfoEntityAll();
     /**
      * 根据作业ID查找作业
      *
@@ -61,4 +61,8 @@ public interface OrderInfoDao {
     void delOrderinfoByOID(Integer oid);
 
     int getOrderCount() throws Exception;
+    /**
+     * update on
+     */
+    void updateOn(OrderInfo oi);
 }

@@ -34,9 +34,8 @@ public interface AdminService {
      * 添加科目批次
      *
      * @param orderInfo 科目批次实体
-     * @param user
      */
-    void addOrderInfo(OrderInfo orderInfo, User user) throws Exception;
+    void addOrderInfo(OrderInfo orderInfo) throws Exception;
 
     /**
      * 删除科目批次

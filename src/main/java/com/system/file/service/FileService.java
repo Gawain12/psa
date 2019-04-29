@@ -37,7 +37,7 @@ public interface FileService {
      *
      * @return 作业名集合
      */
-    Set<String> getOrderInfoEntity();
+   // Set<String> getOrderInfoEntity();
 
     /**
      * 获取所有作业的作业名
@@ -137,4 +137,33 @@ public interface FileService {
      * @throws Exception Exception
      */
     boolean deleteFile(User user, int hId) throws Exception;
+    /**
+     * Update OrderName
+     */
+    void updateOn(OrderInfo oi);
+    /**
+     * get lastweek history
+     */
+    List<History> getUserHistoryByWeek(int uid);
+
+    /**
+     * Get lastMonth history
+     * @param uid
+     * @return
+     */
+    List<History> getUserHistoryByMonth(int uid);
+    /**
+     * Get lastWeek history
+     * @param huid
+     * @return
+     */
+    List<History> getUpListByWeek(int huid);
+
+    /**
+     * Get lastMonth history
+     * @param huid
+     * @return
+     */
+    List<History> getUpListByMonth(int huid);
+
 }

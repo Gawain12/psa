@@ -104,25 +104,10 @@ public class AdminAction {
 
     /**
      * app信息的获取，用echarts显示
-     * @param request
      * @return
      */
     @RequestMapping("/getAllecharts")
-    public void getAllecharts(HttpServletRequest request, HttpServletResponse response,int uid)throws Exception{
-
-    /*    List m = (List) new  ArrayList();
-        JSONArray jsons = new JSONArray();
-        for(int i=0;i<10;i++){
-            History user = new History();
-            user.setHid("name_" + i);
-            user.setHoid(i);
-            m.add(user);
-        }
-        for(int j=0;j<m.size();j++){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user", m.get(j));
-            jsons.add(jsonObject);
-        }*/
+    public void getAllecharts( HttpServletResponse response,int uid)throws Exception{
     JSONArray jsons = new JSONArray();
         List<History> list = fileService.getUserHistoryByUserId(uid);
     for(int j=0;j<list.size();j++){
@@ -130,6 +115,44 @@ public class AdminAction {
         jsonObject.put("user",list.get(j));
         jsons.add(jsonObject);
     }
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().print(jsons);
+    }
+
+    /**
+     * Get the Lastweek history
+     * @param response
+     * @param uid
+     * @throws Exception
+     */
+    @RequestMapping("/getlastweek")
+    public void getlastweek( HttpServletResponse response,int uid)throws Exception{
+        JSONArray jsons = new JSONArray();
+        List<History> list = fileService.getUserHistoryByWeek(uid);
+        for(int j=0;j<list.size();j++){
+            JSONObject jsonObject =new JSONObject();
+            jsonObject.put("user",list.get(j));
+            jsons.add(jsonObject);
+        }
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().print(jsons);
+    }
+
+    /**
+     * Last month
+     * @param response
+     * @param uid
+     * @throws Exception
+     */
+    @RequestMapping("/getlastmonth")
+    public void getlastmonth( HttpServletResponse response,int uid)throws Exception{
+        JSONArray jsons = new JSONArray();
+        List<History> list = fileService.getUserHistoryByMonth(uid);
+        for(int j=0;j<list.size();j++){
+            JSONObject jsonObject =new JSONObject();
+            jsonObject.put("user",list.get(j));
+            jsons.add(jsonObject);
+        }
         response.setCharacterEncoding("utf-8");
         response.getWriter().print(jsons);
     }
@@ -148,6 +171,7 @@ public class AdminAction {
         //页码对象
         PagingVO pagingVO = new PagingVO();
         //设置总页数
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
         pagingVO.setTotalCount(adminService.getCountOrder());
         if (page == null || page == 0) {
             pagingVO.setToPageNo(1);
@@ -156,6 +180,7 @@ public class AdminAction {
             pagingVO.setToPageNo(page);
             list = adminService.getOrderInfoEntity(page);
         }
+        model.addAttribute("user", user);
         model.addAttribute("pagingVO", pagingVO);
         model.addAttribute("allOrderInfo", list);
 //      model.addAttribute("allOrderInfo", adminService.getOrderInfoEntity(page));
@@ -186,6 +211,7 @@ public class AdminAction {
     }
 
     /**
+     *
      * 下载所有已上传的文件
      * 该方法需要管理员权限
      *
@@ -219,15 +245,6 @@ public class AdminAction {
         }
         zipOut.close();
     }
-  /*  @RequestMapping(value = "/addStudent", method = {RequestMethod.GET})
-    public String addStudentUI(Model model) throws Exception {
-
- //       List<History> list = FileService.getOrderInfoEntityOfAll();
-
-   //     model.addAttribute("collegeList", list);
-
-        return "jsp/addStudent.jsp";
-    }*/
     @RequestMapping("addStudent")
     @RequiresPermissions("admin")
     public @ResponseBody
@@ -254,7 +271,7 @@ public class AdminAction {
     //    user.setUid(UUID.randomUUID().toString().replace("-", ""));
         user.setFirstlogin(firstlogin);
         user.setPassword(password);
-        user.setHeadimg(headimg);
+       // user.setHeadimg(headimg);
         user.setName(name);
         user.setPercode(percode);
         user.setUsername(username);
@@ -263,60 +280,7 @@ public class AdminAction {
         userService.addStudent(user);
         return true;
     }
-  /*  @RequestMapping(value = "/editStudent", method = {RequestMethod.GET})
-    public String editStudentUI(Integer id, Model model) throws Exception {
-        if (id == null) {
-            //加入没有带学生id就进来的话就返回学生显示页面
-            return "redirect:/admin/showStudent";
-        }
-        StudentCustom studentCustom = studentService.findById(id);
-        if (studentCustom == null) {
-            throw new CustomException("未找到该名学生");
-        }
-        List<College> list = collegeService.finAll();
 
-        model.addAttribute("collegeList", list);
-        model.addAttribute("student", studentCustom);
-
-
-        return "jsp/editStudent.jsp";
-    }
-    /**
-     * 更改科目批次启用状态
-     * 该方法需要管理员权限
-     *
-     * @param oid   科目批次ID
-     * @param key   key
-     * @param value value
-     * @return 更改是否成功
-     * @throws Exception Exception
-
-    @RequestMapping("changeKeyByOID")
-    @RequiresPermissions("admin")
-    public @ResponseBody
-    Boolean changeKeyByOID(Integer oid, String key, String value) throws Exception {
-        if (oid == null || key == null || "".equals(key) || value == null || "".equals(value)) {
-            throw new FileException("更改失败：参数不正确");
-        }
-        Map<String, Object> map = new HashMap<>(2);
-        map.put("oid", oid);
-        if (O_STATE.equals(key)) {
-            map.put(key, Boolean.parseBoolean(value));
-        } else {
-            map.put(key, value);
-        }
-        adminService.changeKeyByOID(map);
-        return true;
-    }*/
-
-    /**
-     * 根据批次ID删除批次
-     * 该方法需要管理员权限
-     *
-     * @param oid 批次ID
-     * @return ResponseBody 是否删除成功
-     * @throws Exception Exception
-     */
     @RequestMapping("delOrderinfoByOID")
     @RequiresPermissions("admin")
     public @ResponseBody
@@ -362,10 +326,10 @@ public class AdminAction {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         String Ouid= user.getName();
         orderInfo.setOuid(Ouid);
-        int oid = (orderInfo.getOname().hashCode()) + (orderInfo.getOsubject().hashCode());
-        orderInfo.setOid(oid);
+      //int oid = (orderInfo.getOname().hashCode()) + (orderInfo.getOsubject().hashCode());
+     // orderInfo.setOid(oid);
         orderInfo.setOtime(new Date());
-        adminService.addOrderInfo(orderInfo,user);
+        adminService.addOrderInfo(orderInfo);
         return true;
 
     }
@@ -376,36 +340,16 @@ public class AdminAction {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
- /*   @RequestMapping("/sStudent")
-    @RequiresPermissions("admin")
-    public String showStudent(Model model, Integer page) throws Exception {
 
-        List<StudentCustom> list = null;
-        //页码对象
-        PagingVO pagingVO = new PagingVO();
-        //设置总页数
-        pagingVO.setTotalCount(studentService.getCountStudent());
-        if (page == null || page == 0) {
-            pagingVO.setToPageNo(1);
-            list = studentService.findByPaging(1);
-        } else {
-            pagingVO.setToPageNo(page);
-            list = studentService.findByPaging(page);
-        }
-
-        model.addAttribute("pagingVO", pagingVO);
-        model.addAttribute("studentList", list);
-
-        return "jsp/showStudent.jsp";
-
-    }*/
     @RequestMapping("/mStudent")
     public String mStudent(Model model, Integer page) throws Exception {
 
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
         List<User> list = null;
         //页码对象
         PagingVO pagingVO = new PagingVO();
         //设置总页数
+        model.addAttribute("user", user);
         pagingVO.setTotalCount(userService.getCountStudent());
         if (page == null || page == 0) {
             pagingVO.setToPageNo(1);
@@ -438,7 +382,17 @@ public class AdminAction {
         u.setName(user.getName());
         u.setPassword(user.getPassword());
         userService.upStudent(u);
-        return "jsp/mStudent.jsp";
+        return "mStudent";
     }
-
+/**
+ * Update OrderName
+ */
+@RequestMapping(value="/updateName")
+public String goUpdate(OrderInfo oi){
+    User user = (User) SecurityUtils.getSubject().getPrincipal();
+    String Ouid= user.getName();
+    oi.setOuid(Ouid);   // System.out.println("id:"+at.getOd()+",type:"+at.getType());
+    fileService.updateOn(oi);
+    return "subjectui";
+}
 }

@@ -62,11 +62,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserEntityByOpenID(String userOpenID) {
-        return userDao.getUserEntityByOpenID(userOpenID);
-    }
-
-    @Override
     public User getUserEntityByHid(int hid) {
         return userDao.getUserEntityByHid(hid);
     }

@@ -39,7 +39,7 @@ public class Login {
     public String userLogin(Model model, HttpServletRequest request) throws LoginException {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         if (user != null ) {
-            return "redirect:index.jsp";
+            return "redirect:loading.jsp";
         }
         String exceptionClassName = (String) request.getAttribute("shiroLoginFailure");
         if (exceptionClassName != null) {

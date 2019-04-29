@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>研究生学习评测系统-后台管理</title>
+    <title>学生信息管理-研究生学习评测系统</title>
     <link rel="shortcut icon" href="${basePath }img/favicon.ico"/>
     <link rel="bookmark" href="${basePath }img/favicon.ico"/>
     <link href="${basePath }weblib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -54,6 +54,43 @@
             margin-top: 8px;
             margin-bottom: 8px;
         }
+        .col-md-10
+        {
+            width:100%;
+        }
+        .button {
+            justify-content: center;
+            align-items: center;
+            display: inline-block;
+            padding: 0px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            height:33px ;
+            border-radius: 15px;
+            box-shadow: 0 4px #999;
+            border: none;
+        }
+        .button1 {
+            height:55px ;
+            border-radius: 50%;
+            background-color: #808040;
+            font-size: 19px;
+            padding: 12px 18px;
+        }
+        .button2 {
+            background-color: #4F9D9D;
+        }
+        .button3 {
+            background-color: #7373B9;
+        }
+        .button4 {
+            background-color: #804040;
+        }
+        .button:hover {background-color: #A6A600}
     </style>
 </head>
 <body class="background">
@@ -76,8 +113,8 @@
                     </div>
                 </div>
                 <div class="collapse navbar-collapse navbar-right" id="bs-collapse">
-                    <span><a href="${basePath }logout" class="btn btn-danger">退出</a></span>
-                    <span><a href="${basePath }fileupload" class="btn btn-danger">返回</a></span>
+                    <button name="quit"onclick="window.location.href='${basePath }logout'" class="button button2" style="height:48px;font-size: 17px" ;>退出</button>
+                    <button name="back"onclick="window.location.href='${basePath }admin'" class="button button4"style="height:48px;font-size: 17px" >返回主页</button>
                 </div>
             </div>
         </div>
@@ -90,7 +127,7 @@
                 <section>
                     <div class="container">
                 <h1 class="col-md-5">学生名单管理</h1>
-                    <button type="button" id="upfilebutton_id" class="btn btn-primary"
+                    <button type="button" id="upfilebutton_id" class="button button1"
                             data-toggle="modal" data-remote="${basePath }jsp/addStudent.jsp" data-target=".bs-modal-lg">添加用户信息
                     </button>
                 </button>
@@ -100,9 +137,15 @@
                         <div class="modal-content"></div>
                     </div>
                 </div>
+                        <div class="modal fade bs-modal-ed" id="editmodel" tabindex="-1" role="dialog"
+                             aria-labelledby="myLargeModalLabel">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content"></div>
+                            </div>
+                        </div>
                     </div>
                 </section>
-            <div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="delalert_id">
+                <div class="alert alert-danger alert-dismissible fade in hidden" role="alert" id="delalert_id">
                 <h4 class="glyphicon glyphicon-warning-sign"> 确定删除吗？</h4>
                 <p>注意：该操作不可逆！</p>
                 <p>
@@ -110,7 +153,6 @@
                     <button type="button" class="btn btn-default" id="delalert_cancel">取消</button>
                 </p>
             </div>
-
             <table class="table table-bordered">
             <thead>
             <tr>
@@ -125,9 +167,11 @@
                     <td>${item.username}</td>
                     <td>${item.name}</td>
                     <td>
-                        <button class="btn btn-default  btn-info" onClick="location.href='${basePath }editStudent?uid=${item.uid}'">修改</button>
-                        <button type="button" class="btn btn-info btn-danger" onclick="del(${item.uid })">删除</button>
-                        <button class="btn btn-info btn-warning"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
+                        <button type="button" id="editbutton_id" class="button button3"
+                                data-toggle="modal" data-remote="${basePath }editStudent?uid=${item.uid}" data-target=".bs-modal-ed">修改
+                        </button>
+                        <button type="button" class="button button2" onclick="del_button(${item.uid })">删除</button>
+                        <button class="button button4"onClick="location.href='${basePath }studentAnalyse?uid=${item.uid}'">查看学习情况</button>
                         <!--弹出框-->
                     </td>
                 </tr>
@@ -172,17 +216,41 @@
 <script src="${basePath }weblib/bootstrap/js/bootstrap.min.js"></script>
 <script src="${basePath }js/base.js"></script>
 <script>
-    function del(uid) {
+  /*  function del(uid) {
         alert("删除成功！");
         $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
             if (data) {
                 window.location.reload();
             }
         });
+    }*/
+    function del_button(uids) {
+        $("#delalert_id").removeClass("hidden");
+        uid = uids;
     }
-    function edit(uid) {
-        console.log("edit" + uid);
-    }
+    $("#alert_id").on('closed.bs.alert', function () {
+        window.location.reload();
+    });
+    $("#delalert_true").click(function () {
+        $("#delalert_id").addClass("hidden");
+        $.get("${basePath }delStudentByUID?uid=" + uid, function (data) {
+            if (data) {
+                $("#alert_success").removeClass("alert-danger");
+                $("#alert_success").addClass("alert-success");
+                $("#alert_success").removeClass("hidden");
+                $("#" + uid).remove();
+                window.location.reload();
+            } else {
+                $("#alert_success").removeClass("alert-success");
+                $("#alert_success").addClass("alert-danger");
+                $("#alert_success").removeClass("hidden");
+                $("#del_message").text("文件删除失败！请检查网络连接！");
+            }
+        });
+    });
+    $("#delalert_cancel").click(function () {
+        $("#delalert_id").addClass("hidden");
+    });
 </script>
 </div>
 </body>

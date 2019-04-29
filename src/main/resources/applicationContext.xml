@@ -147,15 +147,4 @@
         <constructor-arg value="rememberMe"/>
         <property name="maxAge" value="${maxAge}"/>
     </bean>
-    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
-    <!-- <bean id="formAuthenticationFilter"
-           class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
-         &lt;!&ndash; 表单中账号的input名称 &ndash;&gt;
-         <property name="usernameParam" value="username"/>
-         &lt;!&ndash; 表单中密码的input名称 &ndash;&gt;
-         <property name="passwordParam" value="password"/>
-         &lt;!&ndash; <property name="rememberMeParam" value="rememberMe"/> &ndash;&gt;
-         &lt;!&ndash; loginurl：用户登陆地址，此地址是可以http访问的url地址 &ndash;&gt;
-         <property name="loginUrl" value="/loginsubmit"/>
-     </bean>-->
 </beans>
